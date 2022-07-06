@@ -1,0 +1,275 @@
+package com.ced.gweather.auth.ui
+
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
+import com.ced.commons.clean.interactor.Failure
+import com.ced.commons.ui.extensions.gone
+import com.ced.commons.ui.extensions.invisible
+import com.ced.commons.ui.extensions.viewModel
+import com.ced.commons.ui.extensions.visible
+import com.ced.commons.ui.observe
+import com.ced.commons.util.log.Logger
+import com.ced.gweather.R
+import com.ced.gweather.auth.features.AuthenticateViewModel
+import com.ced.gweather.auth.features.AuthenticateViewModel.AuthenticationState
+import com.ced.gweather.auth.features.FailedToRegisterUser
+import com.ced.gweather.databinding.LoginFragmentBinding
+import com.ced.gweather.weather.ui.BaseFragmentDI
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.login_fragment.*
+
+class LoginFragment : BaseFragmentDI() {
+
+    private lateinit var authenticateViewModel: AuthenticateViewModel
+    private lateinit var binding: LoginFragmentBinding
+
+    override fun layoutId(): Int = R.layout.login_fragment
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        this.binding = DataBindingUtil.inflate(layoutInflater, layoutId(), container, false)
+        this.binding.lifecycleOwner = this
+
+        return this.binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        appComponent.inject(this)
+
+        authenticateViewModel = viewModel(viewModelFactory) {
+            observe(authenticationState, ::handleAuthenticationState)
+            observe(showSignupSection, ::showRegForm)
+            observe(isCreatingUserFinished, ::onCreateUserFinished)
+        }
+
+        binding.authenticateViewModel = authenticateViewModel
+
+        btnLoginSubmit.setOnClickListener {
+            validate()
+        }
+
+        btnRegSubmit.setOnClickListener {
+            createNewAccount()
+        }
+
+        btnGoToSignupView.setOnClickListener {
+            showRegForm(true)
+        }
+
+        btnGoToLoginView.setOnClickListener {
+            showRegForm(false)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (!checkPermissions()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions()
+            }
+        }
+    }
+
+    private fun showSnackbar(
+        mainTextStringId: String, actionStringId: String,
+        listener: View.OnClickListener
+    ) {
+        Toast.makeText(context, mainTextStringId, Toast.LENGTH_LONG).show()
+    }
+
+    private fun checkPermissions(): Boolean {
+        val permissionState = ActivityCompat.checkSelfPermission(
+            context!!,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        return permissionState == PackageManager.PERMISSION_GRANTED
+    }
+
+
+    private fun startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            REQUEST_PERMISSIONS_REQUEST_CODE
+        )
+    }
+
+    private fun requestPermissions() {
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            requireActivity(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (shouldProvideRationale) {
+            Logger.i(TAG, "Displaying permission rationale to provide additional context.")
+            showSnackbar(
+                "Location permission is needed for core functionality", "Okay"
+            ) {
+                startLocationPermissionRequest()
+            }
+        } else {
+            Logger.i(TAG, "Requesting permission")
+            startLocationPermissionRequest()
+        }
+    }
+
+
+    private fun toggleProgressBarVisibility(show: Boolean) {
+        if (show) {
+            progressBar.visible()
+            progressBar.progress = 20
+
+            btnLoginSubmit.isEnabled = false
+            btnRegSubmit.isEnabled = false
+            btnGoToSignupView.isEnabled = false
+            btnGoToLoginView.isEnabled = false
+
+            activity?.window?.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+
+        } else {
+            progressBar.invisible()
+            progressBar.progress = 100
+
+            btnLoginSubmit.isEnabled = true
+            btnRegSubmit.isEnabled = true
+            btnGoToSignupView.isEnabled = true
+            btnGoToLoginView.isEnabled = true
+
+            activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
+    }
+
+    /**
+     * When user taps the LOG IN button
+     */
+    private fun validate() {
+        toggleProgressBarVisibility(true)
+        updateLoginErrorMessage(null)
+
+        if (authenticateViewModel.isLoginFormValid()) {
+            authenticateViewModel.login()
+        } else {
+            updateLoginErrorMessage("Please provide both email and password.")
+            toggleProgressBarVisibility(false)
+        }
+    }
+
+    /**
+     * When user taps the CREATE NEW ACCOUNT button
+     */
+    private fun createNewAccount() {
+        toggleProgressBarVisibility(true)
+        updateRegErrorMessage(null)
+
+        if (authenticateViewModel.isRegFormValid()) {
+            authenticateViewModel.createNewAccount()
+        } else {
+            updateRegErrorMessage("Please supply all the fields.")
+            toggleProgressBarVisibility(false)
+        }
+    }
+
+    private fun showRegForm(show: Boolean?) {
+        if (show == true) {
+            layoutRegForm.visible()
+            layoutLoginForm.gone()
+        } else {
+            layoutRegForm.gone()
+            layoutLoginForm.visible()
+        }
+        toggleProgressBarVisibility(false)
+    }
+
+    private fun onCreateUserFinished(isFinished: Boolean?) {
+        if (isFinished == true) {
+            tfRegName.text?.clear()
+            tfRegEmail.text?.clear()
+            tfRegPassword.text?.clear()
+        }
+    }
+
+    private fun handleAuthenticationState(authenticationState: AuthenticationState?) {
+        toggleProgressBarVisibility(false)
+
+        when (authenticationState) {
+            AuthenticationState.UNAUTHENTICATED -> {
+                updateLoginErrorMessage(null)
+                layoutLoginForm.visible()
+                placeholderLayout.gone()
+            }
+
+            AuthenticationState.INVALID_AUTHENTICATION -> {
+                updateLoginErrorMessage("Unable to login. Please check your email address or password.")
+            }
+
+            AuthenticationState.AUTHENTICATED -> {
+                layoutLoginForm.gone()
+                placeholderLayout.visible()
+
+                findNavController().navigate(R.id.action_when_login_success)
+            }
+
+            else -> {}
+        }
+    }
+
+    private fun updateLoginErrorMessage(message: String?) {
+        if (message == null) {
+            tvLoginErrorMessage.invisible()
+        } else {
+            tvLoginErrorMessage.visible()
+            tvLoginErrorMessage.text = message
+        }
+    }
+
+    private fun updateRegErrorMessage(message: String?) {
+        if (message == null) {
+            tvRegErrorMessage.invisible()
+        } else {
+            tvRegErrorMessage.visible()
+            tvRegErrorMessage.text = message
+        }
+    }
+
+    private fun handleFailure(failure: Failure?) {
+        when (failure) {
+            is FailedToRegisterUser -> {
+                Snackbar.make(
+                    requireView(),
+                    resources.getString(R.string.unable_to_register_user),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            else -> showFailureDialog()
+        }
+    }
+
+    companion object {
+
+        private val TAG = LoginFragment::class.java.simpleName
+
+        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 34
+
+        @JvmStatic
+        fun newInstance() = LoginFragment()
+    }
+
+}

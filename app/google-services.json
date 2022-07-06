@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "473427839068",
+    "firebase_url": "https://gweather-74a7a.firebaseapp.com",
+    "project_id": "gweather-74a7a",
+    "storage_bucket": "gweather-74a7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473427839068:android:8dd6b75fdd02cc301abe99",
+        "android_client_info": {
+          "package_name": "com.ced.gweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473427839068-efgicmh9hj6vrtu9dpel6n9b8eghj94v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANK7vGMfV_NMcxAswEfQ6HTKPvrZiVQbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473427839068-efgicmh9hj6vrtu9dpel6n9b8eghj94v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">GWeather</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login">Log In</string>
+    <string name="or_separator">Don\'t have an account yet?</string>
+    <string name="reg_already_have_acc">Already have an account?</string>
+    <string name="reg_create_new_acc">Create new account</string>
+    <string name="signup">Sign Up</string>
+    <string name="login_welcome_lbl">Welcome to GWeather</string>
+    <string name="reg_name_lbl">Name</string>
+    <string name="email_add_lbl">Email Address</string>
+    <string name="pass_add_lbl">Password</string>
+    <string name="title_weather">GWeather</string>
+    <string name="reg_title">Nice meeting you here, so let\'s sign-up!</string>
+    <string name="unable_to_register_user">Unable to register user. Please contact your administrator.</string>
+
+    <string name="unable_to_get_current_weather">Unable to get the current weather. Check your internet connection and try again</string>
+    <string name="unable_to_load_weather_records">Unable to get the weather records. Check your internet connection and try again</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_title_home">Home</string>
+    <string name="navigation_drawer_title_logout">Logout</string>
+
+    <string name="confirm_logout">Are you sure you want to log out?</string>
+
+    <string name="splash_line">Life move on, weather you like or not.</string>
+
+    <!-- GWeather -->
+    <string name="weather_sunrise">Sunrise</string>
+    <string name="weather_sunset">Sunset</string>
+    <string name="weather_wind">Wind</string>
+    <string name="weather_pressure">Pressure</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_visibility">Visibility</string>
+
+</resources>

@@ -1,0 +1,3 @@
+include ':authentication'
+include ':commons'
+include ':app', ':gweather-core'

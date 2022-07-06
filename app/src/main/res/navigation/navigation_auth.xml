@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_auth"
+        app:startDestination="@id/nav_login">
+
+    <fragment
+            android:id="@+id/nav_login"
+            android:name="com.ced.gweather.auth.ui.LoginFragment"
+            tools:layout="com.ced.gweather.auth.ui.LoginFragment" />
+
+    <action
+            android:id="@+id/action_when_login_success"
+            app:destination="@+id/nav_main"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
+
+    <activity
+            android:id="@+id/nav_main"
+            android:name="com.ced.gweather.weather.ui.MainActivity" />
+
+</navigation>

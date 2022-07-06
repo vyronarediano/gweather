@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#03A9F4</color>
+
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="primary_text">#201f24</color>
+    <color name="secondary_text">#999999</color>
+    <color name="highlight_text">#afaf0d</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorPrimaryBackground">#f8f8f8</color>
+    <color name="colorTotalAmount">#4bc1e1</color>
+    <color name="colorActionBarBg">#ffff</color>
+    <color name="colorActionBarText">#2d2d2d</color>
+
+    <color name="colorWidgetBackgroundLightRed">#19DC3D41</color>
+    <color name="colorWidgetBackgroundLightGreen">#eefcf2</color>
+    <color name="colorWidgetText">@color/colorPrimary</color>
+    <color name="colorWidgetBackgroundLightGray">#f8f8f8</color>
+    <color name="colorWidgetText2">@color/primary_text</color>
+    <color name="colorWidgetIcon">#3f4042</color>
+    <color name="colorWidgetIconSecondary">#626367</color>
+
+    <color name="drawer_item_text_color">#374334</color>
+    <color name="drawer_item_bg_selected">#eaf6e6</color>
+    <color name="bottom_nav_icon_and_text_color">#626367</color>
+
+    <color name="header_text_secondary">#9d9d9d</color>
+
+    <color name="delete_color">#dc3d41</color>
+
+    <color name="text_field_color">#f3fbf5</color>
+    <color name="icon_gray_color">#757575</color>
+    <color name="field_outline_gray_color" tools:override="true">#dcdbe0</color>
+    <color name="field_hint_color">#676769</color>
+    <color name="field_text_color">@color/primary_text</color>
+
+    <color name="placeholder_background">#dddddd</color>
+    <color name="separator_color">#d8d8d8</color>
+    <color name="row_item_activated_background">#DFDFDF</color>
+
+    <!--Inventory Stock Status Color -->
+    <color name="inventory_stock_status_out_of_stock">#dc3d41</color>
+    <color name="inventory_stock_status_low">#dc8f3d</color>
+    <color name="inventory_stock_status_in_stock">#999999</color>
+
+    <!--Image Button Random Color-->
+    <color name="color_yellow">#f6cc5c</color>
+    <color name="color_red_orange">#f08b5d</color>
+    <color name="color_red">#eb5c54</color>
+    <color name="color_violet">#c281a3</color>
+    <color name="color_blue">#93b9f8</color>
+    <color name="color_baby_blue">#1a3a63</color>
+    <color name="color_peach">#464e5b</color>
+    <color name="color_light_green">#98e1a7</color>
+    <color name="color_green_brown">#94cf7d</color>
+    <color name="color_green_blue">#e2e490</color>
+    <color name="color_orange">#fdb14f</color>
+    <color name="color_dark_green_blue">#cad0ea</color>
+
+    <color name="status">#74F8DDDD</color>
+
+    <!-- PIN SCREEN -->
+    <color name="pin_bg_color">#29b564</color>
+    <color name="pin_circle_numm_bg_color">#25a35a</color>
+
+</resources>

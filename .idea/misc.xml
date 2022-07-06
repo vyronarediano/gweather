@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/arrow_back.xml" value="0.2355" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/background_round_padded_selected.xml" value="0.2355" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/menu_divider.xml" value="0.2355" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/menu_item_background_color_state.xml" value="0.2355" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/menu_item_text_color_state.xml" value="0.2355" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/weather_field_bg.xml" value="0.228" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/drawable/weather_records_row_item_bg.xml" value="0.263" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/font/roboto_light.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout-w936dp/activity_login.xml" value="0.266015625" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout-w936dp/login_fragment.xml" value="0.266015625" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout-w936dp/nav_header_main.xml" value="0.266015625" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout-w936dp/weather_home_tabbed_fragment.xml" value="0.266015625" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout-w936dp/weather_records_row_item.xml" value="0.194140625" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/activity_auth.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/activity_main.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/context_menu_close.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/current_weather_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/login_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/nav_header_main.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/toolbar.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/weather_home_tabbed_fragment.xml" value="0.3536458333333333" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/weather_record_row_item.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/layout/weather_records_fragment.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/menu/activity_main_drawer.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/menu/navigation.xml" value="0.3546875" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.216" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/authentication/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.231" />
+        <entry key="..\:/Users/varediano/StudioProjects/gweather/gweather-core/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.191" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

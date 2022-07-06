@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="authenticateViewModel"
+            type="com.ced.gweather.auth.features.AuthenticateViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:tag="progressBar"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- region LOGIN FORM -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutLoginForm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_triple"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/headerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivAppLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/gweather_logo" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin_x5"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/login_welcome_lbl"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_header"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_x4"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/headerLayout">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtFieldEmailPhoneLayout"
+                        style="@style/OutlinedTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                        android:hint="@string/email_add_lbl"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtFieldEmailPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_condensed_regular"
+                            android:selectAllOnFocus="false"
+                            android:singleLine="true"
+                            android:text="@={authenticateViewModel.emailOrPhone}"
+                            android:textSize="@dimen/text_size_large" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtFieldPasswordLayout"
+                        style="@style/OutlinedTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                        android:layout_marginTop="@dimen/activity_vertical_margin_half"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                        android:hint="@string/pass_add_lbl"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtFieldPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_condensed_regular"
+                            android:inputType="textPassword"
+                            android:selectAllOnFocus="false"
+                            android:singleLine="true"
+                            android:text="@={authenticateViewModel.password}"
+                            android:textSize="@dimen/text_size_large" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLoginErrorMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:textAlignment="center"
+                        android:textColor="@color/design_default_color_error"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLoginSubmit"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/login"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        app:cornerRadius="30dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/or_separator"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="@dimen/text_size_large"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnGoToSignupView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:fontFamily="@font/roboto_condensed_bold"
+                        android:padding="10dp"
+                        android:text="@string/signup"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_large"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- endregion LOGIN FORM -->
+
+        <!-- region SIGN-UP FORM -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutRegForm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRegTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin_x4"
+                android:layout_marginTop="@dimen/activity_vertical_margin_x5"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin_x4"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:lines="2"
+                android:text="@string/reg_title"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_size_toolbar_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layoutSignupContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegTitle">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tfRegNameLayout"
+                    style="@style/OutlinedTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_triple"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                    android:hint="@string/reg_name_lbl"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tfRegName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:text="@={authenticateViewModel.regName}"
+                        android:textSize="@dimen/text_size_large" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tfRegEmailLayout"
+                    style="@style/OutlinedTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_half"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                    android:hint="@string/email_add_lbl"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tfRegEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:text="@={authenticateViewModel.regEmail}"
+                        android:textSize="@dimen/text_size_large" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tfRegPasswordLayout"
+                    style="@style/OutlinedTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_half"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                    android:hint="@string/pass_add_lbl"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tfRegPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:inputType="textPassword"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:text="@={authenticateViewModel.regPass}"
+                        android:textSize="@dimen/text_size_large" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRegErrorMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textAlignment="center"
+                    android:textColor="@color/design_default_color_error"
+                    android:textSize="@dimen/text_size_medium" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegSubmit"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_x4"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="@string/reg_create_new_acc"
+                    android:textSize="@dimen/text_size_large"
+                    app:cornerRadius="30dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="@string/reg_already_have_acc"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text_size_large"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btnGoToLoginView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:padding="10dp"
+                    android:text="@string/login"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_large"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- endregion SIGN-UP FORM -->
+
+        <!-- region LOADING/SPLASH SCREEN -->
+        <LinearLayout
+            android:id="@+id/placeholderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:src="@drawable/gweather_logo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:text="@string/splash_line"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_large"
+                android:visibility="gone" />
+
+        </LinearLayout>
+        <!-- endregion LOADING/SPLASH SCREEN -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

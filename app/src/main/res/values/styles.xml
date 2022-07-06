@@ -1,0 +1,196 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseTheme" />
+
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnBackground">@color/primary_text</item>
+        <item name="actionModeStyle">@style/GWeatherActionModeTheme</item>
+        <item name="materialCalendarFullscreenTheme">
+            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
+        </item>
+        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+
+        <!-- For Drawer -->
+        <item name="colorStateNavigationItem">@color/drawer_item_text_color</item>
+        <item name="colorNavigationItemNormal">@color/drawer_item_text_color</item>
+        <item name="colorNavigationItemSelected">@color/drawer_item_text_color</item>
+        <item name="colorNavigationItemBackgroundSelected">@color/drawer_item_bg_selected</item>
+        <item name="colorNavigationItemBackgroundPressed">@color/drawer_item_bg_selected</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
+        <item name="android:listDivider">@drawable/menu_divider</item>
+
+    </style>
+
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">@drawable/menu_item_text_color_state</item>
+        <item name="itemTextAppearance">@style/TextAppearance.Custom.Navigation.Item</item>
+        <item name="itemTextColor">@drawable/menu_item_text_color_state</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
+
+    <style name="Theme.NavigationView" parent="AppTheme">
+        <item name="colorControlHighlight">@android:color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Navigation.Item" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/drawer_item_text_color</item>
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.Fullscreen" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="GWeatherToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <!-- android:textColorPrimary is the color of the title text in the Toolbar -->
+        <item name="android:textColorPrimary">@color/colorActionBarText</item>
+        <!-- actionMenuTextColor is the color of the text of action (menu) items -->
+        <item name="actionMenuTextColor">@color/colorActionBarText</item>
+        <!-- drawerArrowStyle is the color of the menu/burger icon -->
+        <item name="drawerArrowStyle">@style/GWeatherToolbar.DrawerHamburger</item>
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:homeAsUpIndicator">@drawable/round_arrow_back</item>
+    </style>
+
+    <style name="GWeatherToolbarTheme.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_size_toolbar_title</item>
+    </style>
+
+    <style name="GWeatherActionModeTheme" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/colorPrimaryDark</item>
+        <item name="titleTextStyle">@style/GWeatherActionModeTheme.TitleText</item>
+        <item name="closeItemLayout">@layout/context_menu_close</item>
+    </style>
+
+    <style name="GWeatherActionModeTheme.TitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="GWeatherToolbar.TitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorActionBarText</item>
+    </style>
+
+    <style name="GWeatherToolbar.DrawerHamburger" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">?attr/colorControlNormal</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SalesButton" parent="Theme.MaterialComponents">
+        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnSurface">@color/colorAccent</item>
+    </style>
+
+    <style name="SecondaryButton" parent="Theme.MaterialComponents">
+        <item name="colorOnPrimary">@color/header_text_secondary</item>
+        <item name="colorPrimary">@color/colorWidgetBackgroundLightGray</item>
+        <item name="colorOnSurface">@color/secondary_text</item>
+    </style>
+
+    <style name="NumKeypadButton.MaterialButton" parent="Theme.MaterialComponents">
+        <item name="colorOnPrimary">@color/header_text_secondary</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorOnSurface">@color/secondary_text</item>
+    </style>
+
+    <style name="Progressbar.White" parent="AppTheme">
+        <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
+
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="colorControlNormal">@color/colorPrimaryBackground</item>
+        <item name="colorControlActivated">@color/colorPrimaryBackground</item>
+        <item name="colorControlHighlight">@color/colorPrimaryBackground</item>
+    </style>
+
+    <style name="TextFieldTheme" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorPrimaryBackground</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ImageButtonColor">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/card_corner_radius</item>
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
+
+        <item name="android:windowIsFloating">false</item>
+
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/colorWhite</item>
+
+        <!-- Additionally if you want animations when dialog opening -->
+        <item name="android:windowEnterAnimation">@anim/nav_default_pop_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/nav_default_pop_exit_anim</item>
+    </style>
+
+    <style name="DrawerTextTypeface" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+    </style>
+
+    <style name="OutlinedTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="boxStrokeWidth">@dimen/fields_stroke_width</item>
+        <item name="boxStrokeWidthFocused">@dimen/fields_stroke_width</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/fields_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/fields_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/fields_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/fields_radius</item>
+        <item name="hintTextColor">@color/field_hint_color</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/colorWhite</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+</resources>

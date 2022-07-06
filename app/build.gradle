@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion = versions.buildTools
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    defaultConfig {
+        applicationId names.applicationId
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+
+        versionCode 1_00_00_00 // major_minor_patch_upload
+        versionName "1.0.0" // major_minor_patch
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../release.jks")
+            storePassword "rb2tced4C377"
+            keyAlias "release"
+            keyPassword "rb2tced4C377"
+        }
+    }
+
+    buildFeatures{
+        dataBinding = true
+    }
+
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+        density {
+            // This property is set to true by default.
+            enableSplit = true
+        }
+        abi {
+            // This property is set to true by default.
+            enableSplit = true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = versions.sourceCompat
+        targetCompatibility = versions.targetCompat
+    }
+
+    kotlinOptions {
+        jvmTarget = versions.jvmCompat
+    }
+}
+
+dependencies {
+    implementation project(':authentication')
+    implementation project(':gweather-core')
+    implementation fileTree(dir: 'libs', include: '*.jar')
+
+    // Framework
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.androidXLifeCycle}"
+    implementation "com.android.support:multidex:${versions.androidMultiDex}"
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    implementation "com.google.dagger:dagger-android-support:${versions.dagger}"
+    implementation "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
+    implementation "io.reactivex.rxjava2:rxkotlin:${versions.rxKotlin}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxJava}"
+    implementation "net.danlew:android.joda:${versions.androidJodaTime}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+    kapt "com.android.databinding:compiler:${versions.gradle}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
+    // UI
+    implementation "androidx.legacy:legacy-support-v4:${versions.androidXLegacySupport}"
+    implementation "androidx.appcompat:appcompat:${versions.androidXAppCompat}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.androidXConstraintLayout}"
+    implementation "androidx.core:core-ktx:${versions.androidXKotlin}"
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.androidXNav}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.androidXNav}"
+    implementation "androidx.recyclerview:recyclerview:${versions.androidXRecyclerView}"
+    implementation "androidx.recyclerview:recyclerview-selection:${versions.androidXRecyclerSelection}"
+    implementation "com.airbnb.android:lottie:${versions.lottie}"
+    implementation "com.facebook.shimmer:shimmer:${versions.fbShimmer}"
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "com.kyanogen.signatureview:signature-view:${versions.signatureView}"
+    implementation "com.journeyapps:zxing-android-embedded:${versions.zxing}"
+    implementation "morxander.editcard:EditCard:${versions.creditCard}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
+
+    implementation "com.google.android.gms:play-services-location:${versions.googlePlayServices}"
+
+    implementation "com.karumi:dexter:${versions.dexterPermissions}"
+
+    // Crashlytics
+    implementation platform("com.google.firebase:firebase-bom:${versions.firebaseBom}")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "com.android.support.test:runner:${versions.testRunner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
+
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
