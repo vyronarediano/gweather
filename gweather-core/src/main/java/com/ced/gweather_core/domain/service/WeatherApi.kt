@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface WeatherApi {
 
-    @GET("data/2.5/weather?&units=metric&appid=172839f8545fe79053427373d8191a27")
+    @GET("data/2.5/weather?&units=metric&appid={YOUR_API_KEY}")
     fun getData(
         @Query(value = "q") currentLocCityCountry: String
     ): Single<WeatherModel>

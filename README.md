@@ -9,9 +9,14 @@ A beautiful and minimal weather app that displays the current weather forecast o
 
 ## Features
 
-- Authentication
+- Modular Android app architecture
+- MVVM + Clean
+
+- Sign-in and Registration
+- Secure Login Authentication
 - Current Weather Data
-- List of Weather Record
+- List of Weather fetched
+
 
 
 ## Tech Stack
@@ -26,7 +31,7 @@ A beautiful and minimal weather app that displays the current weather forecast o
 
 **Database & Authentication:** Google Firebase Firestore
 
-**Others:** Android Jetpack, RxJava, RxKotlin, Espresso, LiveData
+**Others:** Android Jetpack, RxJava, RxKotlin, Espresso, Glide, LiveData
 
 
 
