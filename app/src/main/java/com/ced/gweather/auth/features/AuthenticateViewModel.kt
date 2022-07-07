@@ -62,7 +62,7 @@ class AuthenticateViewModel
     }
 
     fun isLoginFormValid(): Boolean {
-        return emailOrPhone.value.isNullOrEmpty() && password.value.isNullOrEmpty()
+        return !emailOrPhone.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
     }
 
     fun isRegFormValid(): Boolean {
