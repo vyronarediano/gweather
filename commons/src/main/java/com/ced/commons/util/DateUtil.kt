@@ -2,9 +2,6 @@ package com.ced.commons.util
 
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
-
-val MILLIS_IN_A_DAY = 86400000.0
 
 fun Date.toSimpleString(): String {
 
@@ -49,38 +46,4 @@ fun Date.toDateString(): String {
     val format = SimpleDateFormat("MMM d, yyy")
 
     return format.format(date)
-}
-
-fun Date?.daysBetween(toDate: Date): Int {
-    if (this == null) return 0
-
-    val stdToDate = Calendar.getInstance().apply {
-        time = toDate
-        set(Calendar.MILLISECOND, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.HOUR_OF_DAY, 0)
-    }
-
-    val stdThisDate = Calendar.getInstance().apply {
-        time = this@daysBetween
-        set(Calendar.MILLISECOND, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.HOUR_OF_DAY, 0)
-    }
-
-    //fromDate is future date
-    return if (stdToDate.before(stdThisDate)) {
-
-        val diffInMillis = stdThisDate.timeInMillis.minus(stdToDate.timeInMillis).toDouble()
-        (diffInMillis / MILLIS_IN_A_DAY).roundToInt()
-
-    } else {
-
-        val diffInMillis = stdToDate.timeInMillis.minus(stdThisDate.timeInMillis).toDouble()
-        -(diffInMillis / MILLIS_IN_A_DAY).roundToInt()
-
-    }
-
 }

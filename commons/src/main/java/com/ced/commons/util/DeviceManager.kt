@@ -10,8 +10,6 @@ import android.net.ConnectivityManager
  */
 object DeviceManager {
 
-    private val TAG = DeviceManager::class.java.simpleName
-
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

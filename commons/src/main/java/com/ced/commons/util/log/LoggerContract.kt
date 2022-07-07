@@ -1,7 +1,5 @@
 package com.ced.commons.util.log
 
-import com.ced.commons.util.log.LogLevel
-
 /**
  * Don't use the logger for things that should be done in the Analytics.
  * In production logLevel can be modified depending on the need.
