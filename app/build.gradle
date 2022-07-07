@@ -73,10 +73,10 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: '*.jar')
+
     implementation project(':authentication')
     implementation project(':gweather-core')
-
-    implementation fileTree(dir: 'libs', include: '*.jar')
 
     // Framework
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.androidXLifeCycle}"

@@ -19,6 +19,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(':commons')
     implementation project(':authentication')
 
@@ -46,9 +47,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${versions.rxJava}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
     implementation "net.danlew:android.joda:${versions.androidJodaTime}"
-    kapt "com.android.databinding:compiler:${versions.gradle}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -57,11 +55,16 @@ dependencies {
 
     implementation "com.google.code.gson:gson:${versions.gson}"
 
+    kapt "com.android.databinding:compiler:${versions.gradle}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
+    kaptTest "com.google.dagger:dagger-compiler:${versions.dagger}"
+    kaptTest "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "androidx.test:core:${versions.testCore}"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito}"
-    kaptTest "com.google.dagger:dagger-compiler:${versions.dagger}"
-    kaptTest "com.google.dagger:dagger-android-processor:${versions.dagger}"
 }
 
 repositories {
