@@ -1,7 +1,5 @@
 package com.ced.gweather_core.data.firestore
 
-import com.ced.authentication.data.entity.UserEntity
-import com.ced.authentication.data.mapper.toDomain
 import com.ced.commons.util.log.Logger
 import com.ced.gweather_core.data.entity.WeatherEntity
 import com.ced.gweather_core.data.mapper.toDomain

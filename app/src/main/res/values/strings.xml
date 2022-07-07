@@ -21,6 +21,9 @@
     <string name="title_weather">GWeather</string>
     <string name="reg_title">Nice meeting you here, so let\'s sign-up!</string>
     <string name="unable_to_register_user">Unable to register user. Please contact your administrator.</string>
+    <string name="login_provide_email_pass">Please provide both email and password.</string>
+
+    <string name="online_required">You need to be online to perform action.</string>
 
     <string name="unable_to_get_current_weather">Unable to get the current weather. Check your internet connection and try again</string>
     <string name="unable_to_load_weather_records">Unable to get the weather records. Check your internet connection and try again</string>

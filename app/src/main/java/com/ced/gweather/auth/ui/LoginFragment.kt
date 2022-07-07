@@ -18,6 +18,7 @@ import com.ced.commons.ui.extensions.invisible
 import com.ced.commons.ui.extensions.viewModel
 import com.ced.commons.ui.extensions.visible
 import com.ced.commons.ui.observe
+import com.ced.commons.util.DeviceManager
 import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
 import com.ced.gweather.auth.features.AuthenticateViewModel
@@ -49,6 +50,7 @@ class LoginFragment : BaseFragmentDI() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         appComponent.inject(this)
 
         authenticateViewModel = viewModel(viewModelFactory) {
@@ -60,11 +62,11 @@ class LoginFragment : BaseFragmentDI() {
         binding.authenticateViewModel = authenticateViewModel
 
         btnLoginSubmit.setOnClickListener {
-            validate()
+            validate(DeviceManager.isNetworkAvailable(requireContext()))
         }
 
         btnRegSubmit.setOnClickListener {
-            createNewAccount()
+            createNewAccount(DeviceManager.isNetworkAvailable(requireContext()))
         }
 
         btnGoToSignupView.setOnClickListener {
@@ -160,14 +162,20 @@ class LoginFragment : BaseFragmentDI() {
     /**
      * When user taps the LOG IN button
      */
-    private fun validate() {
+    private fun validate(online: Boolean) {
         toggleProgressBarVisibility(true)
         updateLoginErrorMessage(null)
 
-        if (authenticateViewModel.isLoginFormValid()) {
+        if (!online) {
+            toggleProgressBarVisibility(false)
+            updateLoginErrorMessage(resources.getString(R.string.online_required))
+            return
+        }
+
+        if (authenticateViewModel.isLoginFormValid() && online) {
             authenticateViewModel.login()
         } else {
-            updateLoginErrorMessage("Please provide both email and password.")
+            updateLoginErrorMessage(resources.getString(R.string.login_provide_email_pass))
             toggleProgressBarVisibility(false)
         }
     }
@@ -175,11 +183,17 @@ class LoginFragment : BaseFragmentDI() {
     /**
      * When user taps the CREATE NEW ACCOUNT button
      */
-    private fun createNewAccount() {
+    private fun createNewAccount(online: Boolean) {
         toggleProgressBarVisibility(true)
         updateRegErrorMessage(null)
 
-        if (authenticateViewModel.isRegFormValid()) {
+        if (!online) {
+            toggleProgressBarVisibility(false)
+            updateRegErrorMessage(resources.getString(R.string.online_required))
+            return
+        }
+
+        if (authenticateViewModel.isRegFormValid() && online) {
             authenticateViewModel.createNewAccount()
         } else {
             updateRegErrorMessage("Please supply all the fields.")
@@ -190,20 +204,38 @@ class LoginFragment : BaseFragmentDI() {
     private fun showRegForm(show: Boolean?) {
         if (show == true) {
             layoutRegForm.visible()
+            clearAllLoginFields()
+
             layoutLoginForm.gone()
         } else {
             layoutRegForm.gone()
+            clearAllRegFields()
+
             layoutLoginForm.visible()
         }
         toggleProgressBarVisibility(false)
+
+        updateLoginErrorMessage(null)
+        updateRegErrorMessage(null)
     }
 
     private fun onCreateUserFinished(isFinished: Boolean?) {
         if (isFinished == true) {
-            tfRegName.text?.clear()
-            tfRegEmail.text?.clear()
-            tfRegPassword.text?.clear()
+            updateLoginErrorMessage(null)
+
+            clearAllRegFields()
         }
+    }
+
+    private fun clearAllRegFields() {
+        tfRegName.text?.clear()
+        tfRegEmail.text?.clear()
+        tfRegPassword.text?.clear()
+    }
+
+    private fun clearAllLoginFields() {
+        tfLoginEmail.text?.clear()
+        tfLoginPass.text?.clear()
     }
 
     private fun handleAuthenticationState(authenticationState: AuthenticationState?) {
@@ -233,7 +265,8 @@ class LoginFragment : BaseFragmentDI() {
 
     private fun updateLoginErrorMessage(message: String?) {
         if (message == null) {
-            tvLoginErrorMessage.invisible()
+            tvLoginErrorMessage.gone()
+
         } else {
             tvLoginErrorMessage.visible()
             tvLoginErrorMessage.text = message
@@ -242,7 +275,7 @@ class LoginFragment : BaseFragmentDI() {
 
     private fun updateRegErrorMessage(message: String?) {
         if (message == null) {
-            tvRegErrorMessage.invisible()
+            tvRegErrorMessage.gone()
         } else {
             tvRegErrorMessage.visible()
             tvRegErrorMessage.text = message
