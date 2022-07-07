@@ -21,6 +21,7 @@ buildscript {
             'androidXNav'               : '2.3.5',
             'androidXRecyclerView'      : '1.2.1',
             'androidXRecyclerSelection' : '1.2.0-alpha01',
+            'androidXSecurity'          : '1.1.0-alpha01',
             'creditCard'                : '1.0.1',
             'dagger'                    : '2.34',
             'dexterPermissions'         : '6.2.1',

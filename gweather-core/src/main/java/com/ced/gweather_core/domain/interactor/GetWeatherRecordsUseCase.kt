@@ -21,7 +21,7 @@ class GetWeatherRecordsUseCase @Inject constructor(
 ) : ObservableUseCase<List<WeatherModel>, String>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: String?): Observable<List<WeatherModel>> {
-        return weatherRepository.findWeatherRecordsByUserId(sessionRepository.loggedInUser?.id.orEmpty())
+        return weatherRepository.findWeatherRecordsByUserId(sessionRepository.loggedInUserId.orEmpty())
     }
 
 }

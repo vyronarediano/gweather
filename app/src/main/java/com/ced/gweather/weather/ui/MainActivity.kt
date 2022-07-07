@@ -21,9 +21,7 @@ import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
 import com.ced.gweather.auth.AuthenticateActivity
 import com.ced.gweather.commons.ui.BaseFragment
-import com.ced.gweather.databinding.NavHeaderMainBinding
 import com.ced.gweather.weather.features.drawer.NavHeaderViewModel
-import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
 import com.ced.gweather.weather.ui.weatherhome.WeatherHomeFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -51,7 +49,7 @@ class MainActivity : BaseActivityDI() {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
 
-        navHeaderViewModel = viewModel(viewModelFactory){
+        navHeaderViewModel = viewModel(viewModelFactory) {
             observe(user, ::bindLoggedInUser)
         }
 
@@ -79,7 +77,8 @@ class MainActivity : BaseActivityDI() {
                     // Permission granted.
                 }
                 else -> {
-                    showSnackbar("Permission was denied", "Settings"
+                    showSnackbar(
+                        "Permission was denied", "Settings"
                     ) {
                         // Build intent that displays the App settings screen.
                         val intent = Intent()
@@ -154,7 +153,9 @@ class MainActivity : BaseActivityDI() {
 
         val fragment: Fragment? = when (id) {
             R.id.nav_home -> {
+                // To determine the weather fetched will only be added to record/list when user opens the app only
                 navHeaderViewModel.updateSessionIsAllowedToSave(false)
+
                 WeatherHomeFragment.newInstance()
             }
             // future features
@@ -167,10 +168,6 @@ class MainActivity : BaseActivityDI() {
             fragmentTransaction.replace(R.id.frameContent, fragment)
             fragmentTransaction.commit()
         }
-    }
-
-    private fun showWeatherHomeFragment() {
-
     }
 
     private fun initFragmentManager(fragmentManager: FragmentManager?) {
@@ -203,11 +200,8 @@ class MainActivity : BaseActivityDI() {
     }
 
     private fun bindLoggedInUser(user: User?) {
-        val viewHeader = navigationView.getHeaderView(0)
-        val binding = NavHeaderMainBinding.bind(viewHeader)
-        binding.user = user
-
         tvUserFullName.text = "Hello, ${user?.name}."
+        tvUserEmail.text = user?.email
     }
 
     private fun showLogoutConfirmation() {

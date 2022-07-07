@@ -22,9 +22,9 @@ import com.ced.commons.clean.executor.PostExecutionThread
 import com.ced.commons.clean.executor.ThreadExecutor
 import com.ced.gweather.AndroidApplication
 import com.ced.gweather.auth.ui.LoginFragment
-import com.ced.gweather.weather.ui.MainActivity
 import com.ced.gweather.weather.di.module.ApplicationModule
 import com.ced.gweather.weather.di.module.ViewModelModule
+import com.ced.gweather.weather.ui.MainActivity
 import com.ced.gweather.weather.ui.weatherhome.CurrentWeatherFragment
 import com.ced.gweather.weather.ui.weatherhome.WeatherHomeFragment
 import com.ced.gweather.weather.ui.weatherhome.WeatherRecordsFragment

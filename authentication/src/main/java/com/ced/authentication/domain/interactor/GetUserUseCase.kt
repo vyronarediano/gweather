@@ -45,7 +45,10 @@ class GetUserUseCase @Inject constructor(
 
         return create { emitter ->
             findUser(params).subscribe({ user ->
-                sessionRepository.loggedInUser = user
+
+                sessionRepository.loggedInUserId = user.id
+                sessionRepository.loggedInUserName = user.name
+                sessionRepository.loggedInEmail = user.email
                 sessionRepository.isAllowedToSave = true
 
                 emitter.onSuccess(user)

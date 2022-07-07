@@ -1,8 +1,6 @@
 package com.ced.gweather.weather.di.module
 
 import com.ced.authentication.domain.repository.SessionRepository
-import com.ced.gweather.auth.domain.model.AuthenticationValues
-import com.ced.gweather.auth.domain.model.WeatherAuthenticationValues
 import com.ced.gweather_core.data.memory.SessionMemoryRepository
 import dagger.Binds
 import dagger.Module

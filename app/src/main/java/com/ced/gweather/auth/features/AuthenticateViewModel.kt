@@ -8,7 +8,6 @@ import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.clean.rx.EmptySingleObserver
 import com.ced.commons.util.log.Logger
 import com.ced.gweather.BuildConfig
-import com.ced.gweather.auth.domain.model.WeatherAuthenticationValues
 import com.ced.gweather_core.internal.viewmodel.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
@@ -18,8 +17,7 @@ import javax.inject.Inject
 class AuthenticateViewModel
 @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val registerUserUseCase: RegisterUserUseCase,
-    private val weatherAuthenticationValues: WeatherAuthenticationValues
+    private val registerUserUseCase: RegisterUserUseCase
 ) : BaseViewModel() {
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -129,8 +127,6 @@ class AuthenticateViewModel
         getUserUseCase.execute(object : EmptySingleObserver<User>() {
             override fun onSuccess(result: User) {
                 user = result
-
-                weatherAuthenticationValues.loggedInEmail = result.email
 
                 if (authenticationState.value != AuthenticationState.AUTHENTICATED) {
                     authenticationState.value = AuthenticationState.AUTHENTICATED

@@ -21,8 +21,16 @@ class GetLoggedInUserUseCase @Inject constructor(
 ) : ObservableUseCase<User, Unit>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Unit?): Observable<User> {
-        return if (sessionRepository.loggedInUser != null) Observable.just(sessionRepository.loggedInUser) else Observable.error(
-            IllegalArgumentException("User not yet logged in")
-        )
+        return if (sessionRepository.loggedInUserName != null) {
+            Observable.just(User().apply {
+                id = sessionRepository.loggedInUserId
+                name = sessionRepository.loggedInUserName
+                email = sessionRepository.loggedInEmail
+            })
+        } else {
+            Observable.error(
+                IllegalArgumentException("User not yet logged in.")
+            )
+        }
     }
 }

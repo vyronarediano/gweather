@@ -40,7 +40,7 @@ class CurrentWeatherViewModel
                 if (sessionRepository.isAllowedToSave == true) {
                     result.run {
                         dateCreated = Calendar.getInstance().time
-                        userId = sessionRepository.loggedInUser?.id
+                        userId = sessionRepository.loggedInUserId
 
                         // Add to Firestore every fetch from OpenWeatherMap
                         addWeatherRecordUseCase.execute(object :

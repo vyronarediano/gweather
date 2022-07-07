@@ -1,15 +1,22 @@
 package com.ced.authentication.domain.repository
 
-import com.ced.authentication.domain.model.User
-
 /**
  * @author Cedierick Vyron Arediano
  * @since 1.0.0
  */
 interface SessionRepository {
 
-    var loggedInUser: User?
+    var loggedInUserId: String?
 
+    var loggedInUserName: String?
+
+    var loggedInEmail: String?
+
+    /**
+     * To determine the weather fetched will only be added to record/list when user opens the app only
+     */
     var isAllowedToSave: Boolean?
+
+    fun clear()
 
 }
