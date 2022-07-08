@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import java.util.*
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 
@@ -25,16 +24,6 @@ class AuthenticateViewModel
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     var authenticationState = MutableLiveData<AuthenticationState>()
-
-    private val emailAddressPattern = Pattern.compile(
-        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                "\\@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+"
-    )
 
     // login
     var emailOrPhone = MutableLiveData<String>()
