@@ -8,8 +8,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ced.gweather.R
 import com.google.common.truth.Truth.assertThat
@@ -48,5 +47,24 @@ class LoginFragmentTest : TestCase() {
         onView(withId(R.id.btnLoginSubmit)).perform(click())
 
         assertThat(onView(withId(R.id.tvLoginErrorMessage)).check(matches(withText("Unable to login. Please check your email address or password."))))
+    }
+
+
+    @Test
+    fun testLoginShowSignupView() {
+        onView(withId(R.id.btnGoToSignupView)).perform(click())
+
+        assertThat(onView(withId(R.id.layoutRegForm)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))))
+        assertThat(onView(withId(R.id.layoutLoginForm)).check(matches(withEffectiveVisibility(Visibility.GONE))))
+    }
+
+    @Test
+    fun testRegShowLoginView() {
+        onView(withId(R.id.btnGoToSignupView)).perform(click())
+
+        onView(withId(R.id.btnGoToLoginView)).perform(click())
+
+        assertThat(onView(withId(R.id.layoutLoginForm)).check(matches(withEffectiveVisibility(Visibility.VISIBLE))))
+        assertThat(onView(withId(R.id.layoutRegForm)).check(matches(withEffectiveVisibility(Visibility.GONE))))
     }
 }
