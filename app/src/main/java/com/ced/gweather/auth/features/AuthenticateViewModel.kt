@@ -53,10 +53,10 @@ class AuthenticateViewModel
             add(getUserUseCase)
         }
 
-        if (BuildConfig.DEBUG) {
+/*        if (BuildConfig.DEBUG) {
             emailOrPhone.value = "ced@gmail.com"
             password.value = "asdasd"
-        }
+        }*/
     }
 
     fun isLoginFormValid(): Boolean {

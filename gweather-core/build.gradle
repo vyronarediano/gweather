@@ -60,7 +60,7 @@ dependencies {
 
     implementation "com.google.code.gson:gson:${versions.gson}"
 
-    testImplementation "junit:junit:${versions.junit}"
+    testImplementation "junit:junit:4.13.2"
     testImplementation "androidx.test:core:${versions.testCore}"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito}"
     kaptTest "com.google.dagger:dagger-compiler:${versions.dagger}"

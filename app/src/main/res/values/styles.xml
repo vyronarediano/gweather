@@ -1,32 +1,5 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseTheme" />
-
-    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorOnBackground">@color/primary_text</item>
-        <item name="actionModeStyle">@style/GWeatherActionModeTheme</item>
-        <item name="materialCalendarFullscreenTheme">
-            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
-        </item>
-        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
-
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
-
-        <!-- For Drawer -->
-        <item name="colorStateNavigationItem">@color/drawer_item_text_color</item>
-        <item name="colorNavigationItemNormal">@color/drawer_item_text_color</item>
-        <item name="colorNavigationItemSelected">@color/drawer_item_text_color</item>
-        <item name="colorNavigationItemBackgroundSelected">@color/drawer_item_bg_selected</item>
-        <item name="colorNavigationItemBackgroundPressed">@color/drawer_item_bg_selected</item>
-        <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
-        <item name="android:listDivider">@drawable/menu_divider</item>
-
-    </style>
-
     <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
         <item name="itemIconTint">@drawable/menu_item_text_color_state</item>
         <item name="itemTextAppearance">@style/TextAppearance.Custom.Navigation.Item</item>

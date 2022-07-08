@@ -34,6 +34,8 @@ class LoginFragment : BaseFragmentDI() {
     private lateinit var authenticateViewModel: AuthenticateViewModel
     private lateinit var binding: LoginFragmentBinding
 
+    private lateinit var root: View
+
     override fun layoutId(): Int = R.layout.login_fragment
 
     override fun onCreateView(
@@ -165,6 +167,7 @@ class LoginFragment : BaseFragmentDI() {
     private fun validate(online: Boolean) {
         toggleProgressBarVisibility(true)
         updateLoginErrorMessage(null)
+        hideKeyboard()
 
         if (!online) {
             toggleProgressBarVisibility(false)
@@ -249,7 +252,7 @@ class LoginFragment : BaseFragmentDI() {
             }
 
             AuthenticationState.INVALID_AUTHENTICATION -> {
-                updateLoginErrorMessage("Unable to login. Please check your email address or password.")
+                updateLoginErrorMessage(resources.getString(R.string.login_invalid_email_or_pass))
             }
 
             AuthenticationState.AUTHENTICATED -> {

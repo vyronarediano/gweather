@@ -20,7 +20,8 @@ android {
         versionCode 1_00_00_00 // major_minor_patch_upload
         versionName "1.0.0" // major_minor_patch
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -81,7 +82,7 @@ dependencies {
     // Security
     implementation "androidx.security:security-crypto:${versions.androidXSecurity}"
 
-    // Framework
+    // region Framework
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.androidXLifeCycle}"
     implementation "com.android.support:multidex:${versions.androidMultiDex}"
     implementation "com.google.dagger:dagger:${versions.dagger}"
@@ -95,8 +96,9 @@ dependencies {
     kapt "com.android.databinding:compiler:${versions.gradle}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+    // endregion Framework
 
-    // UI
+    // region UI
     implementation "androidx.legacy:legacy-support-v4:${versions.androidXLegacySupport}"
     implementation "androidx.appcompat:appcompat:${versions.androidXAppCompat}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.androidXConstraintLayout}"
@@ -110,23 +112,33 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     implementation "com.google.android.material:material:${versions.material}"
     kapt "com.github.bumptech.glide:compiler:${versions.glide}"
+    // endregion
 
     implementation "com.google.android.gms:play-services-location:${versions.googlePlayServices}"
 
-    // Crashlytics
+    // region Crashlytics
     implementation platform("com.google.firebase:firebase-bom:${versions.firebaseBom}")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    // endregion Crashlytics
 
-    // Test Libraries
-    testImplementation "junit:junit:${versions.junit}"
-    testImplementation "com.google.truth:truth:1.0.1"
+    // Local unit tests
+    implementation "androidx.test:core:1.4.0"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "com.google.truth:truth:1.1.3"
+    debugImplementation "androidx.fragment:fragment-testing:1.4.1"
 
-    androidTestImplementation "com.android.support.test:runner:${versions.testRunner}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    // Instrumentation tests
+    androidTestImplementation "junit:junit:4.13.2"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "com.google.truth:truth:1.0.1"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
+    androidTestImplementation "io.mockk:mockk-android:1.10.5"
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation('androidx.test:rules:1.4.0')
 }
 
 apply plugin: 'com.google.gms.google-services'
