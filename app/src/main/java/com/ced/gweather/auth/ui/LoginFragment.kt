@@ -21,20 +21,20 @@ import com.ced.commons.ui.observe
 import com.ced.commons.util.DeviceManager
 import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
+import com.ced.gweather.auth.features.AuthenticateUseCaseFailure
 import com.ced.gweather.auth.features.AuthenticateViewModel
 import com.ced.gweather.auth.features.AuthenticateViewModel.AuthenticationState
+import com.ced.gweather.auth.features.FailedToLoginUser
 import com.ced.gweather.auth.features.FailedToRegisterUser
 import com.ced.gweather.databinding.LoginFragmentBinding
 import com.ced.gweather.weather.ui.BaseFragmentDI
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : BaseFragmentDI() {
 
     private lateinit var authenticateViewModel: AuthenticateViewModel
-    private lateinit var binding: LoginFragmentBinding
 
-    private lateinit var root: View
+    private lateinit var binding: LoginFragmentBinding
 
     override fun layoutId(): Int = R.layout.login_fragment
 
@@ -59,6 +59,7 @@ class LoginFragment : BaseFragmentDI() {
             observe(authenticationState, ::handleAuthenticationState)
             observe(showSignupSection, ::showRegForm)
             observe(isCreatingUserFinished, ::onCreateUserFinished)
+            observe(failure, ::handleFailure)
         }
 
         binding.authenticateViewModel = authenticateViewModel
@@ -225,8 +226,11 @@ class LoginFragment : BaseFragmentDI() {
     private fun onCreateUserFinished(isFinished: Boolean?) {
         if (isFinished == true) {
             updateLoginErrorMessage(null)
-
+            hideKeyboard()
             clearAllRegFields()
+
+            Toast.makeText(requireContext(), "Account successfully created", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -252,7 +256,7 @@ class LoginFragment : BaseFragmentDI() {
             }
 
             AuthenticationState.INVALID_AUTHENTICATION -> {
-                updateLoginErrorMessage(resources.getString(R.string.login_invalid_email_or_pass))
+                //updateLoginErrorMessage(resources.getString(R.string.login_invalid_email_or_pass))
             }
 
             AuthenticationState.AUTHENTICATED -> {
@@ -286,15 +290,41 @@ class LoginFragment : BaseFragmentDI() {
     }
 
     private fun handleFailure(failure: Failure?) {
+        if (failure != null) {
+            parent?.hideLoadingProgress()
+
+            when (failure) {
+                Failure.ServerError -> showFailureDialog(
+                    title = "Server Failure",
+                    message = "Sorry, server encountered an error",
+                    onDismissCallback = {
+                        close()
+                    })
+                Failure.NetworkConnection -> showFailureDialog(
+                    title = "Network Connection Failure",
+                    message = "Failed to connect to network. Please try again later.",
+                    onDismissCallback = {
+                        close()
+                    })
+                is Failure.FeatureFailure -> handleUseCaseFailure(failure as AuthenticateUseCaseFailure)
+            }
+            authenticateViewModel.failure.value = null
+        }
+    }
+
+    private fun handleUseCaseFailure(failure: AuthenticateUseCaseFailure?) {
         when (failure) {
             is FailedToRegisterUser -> {
-                Snackbar.make(
-                    requireView(),
-                    resources.getString(R.string.unable_to_register_user),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                updateRegErrorMessage(failure.message)
             }
-            else -> showFailureDialog()
+            is FailedToLoginUser -> {
+                updateLoginErrorMessage(failure.customErrorMessage.ifEmpty { failure.message })
+            }
+            else -> {
+                failure?.let {
+                    updateRegErrorMessage(failure.message)
+                }
+            }
         }
     }
 

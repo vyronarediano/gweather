@@ -7,12 +7,14 @@ import com.ced.authentication.domain.model.User
 import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.clean.rx.EmptySingleObserver
 import com.ced.commons.util.log.Logger
-import com.ced.gweather.BuildConfig
 import com.ced.gweather_core.internal.viewmodel.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import java.util.*
 import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 class AuthenticateViewModel
 @Inject constructor(
@@ -87,11 +89,22 @@ class AuthenticateViewModel
                     }
 
                 } else {
-                    handleFailure(Failure.ServerError)
                     authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                 }
             }
-
+            .addOnFailureListener { e ->
+                if (e is FirebaseAuthInvalidCredentialsException) {
+                    handleFailure(FailedToLoginUser(e, customErrorMsg = null))
+                } else if (e is FirebaseAuthInvalidUserException) {
+                    val errorCode = e.errorCode
+                    if (errorCode == "ERROR_USER_NOT_FOUND") {
+                        handleFailure(FailedToLoginUser(customErrorMsg = "No matching account found."))
+                    }
+                    if (errorCode == "ERROR_USER_DISABLED") {
+                        handleFailure(FailedToLoginUser(customErrorMsg = "User account has been disabled"))
+                    }
+                }
+            }
     }
 
     fun createNewAccount() {
@@ -117,9 +130,11 @@ class AuthenticateViewModel
                         )
                     }
                 } else {
-                    handleFailure(Failure.ServerError)
                     authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                 }
+            }
+            .addOnFailureListener { e ->
+                handleFailure(FailedToRegisterUser(e))
             }
     }
 
