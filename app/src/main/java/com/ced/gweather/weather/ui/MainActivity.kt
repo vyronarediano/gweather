@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -24,6 +23,7 @@ import com.ced.gweather.commons.ui.BaseFragment
 import com.ced.gweather.weather.features.drawer.NavHeaderViewModel
 import com.ced.gweather.weather.ui.weatherhome.WeatherHomeFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
@@ -43,7 +43,7 @@ class MainActivity : BaseActivityDI() {
     private lateinit var toggle: ActionBarDrawerToggle
     private val fragmentManager: FragmentManager = supportFragmentManager
 
-    // region Overriden Methods
+    //region Overriden Methods
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,52 +61,9 @@ class MainActivity : BaseActivityDI() {
         navHeaderViewModel.loadLoggedInUser()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        Logger.i(TAG, "onRequestPermissionResult")
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            when {
-                grantResults.isEmpty() -> {
-                    // If user interaction was interrupted, the permission request is cancelled and you
-                    // receive empty arrays.
-                    Logger.i(TAG, "User interaction was cancelled.")
-                }
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission granted.
-                }
-                else -> {
-                    showSnackbar(
-                        "Permission was denied", "Settings"
-                    ) {
-                        // Build intent that displays the App settings screen.
-                        val intent = Intent()
-                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        val uri = Uri.fromParts(
-                            "package",
-                            Build.DISPLAY, null
-                        )
-                        intent.data = uri
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showSnackbar(
-        mainTextStringId: String, actionStringId: String,
-        listener: View.OnClickListener
-    ) {
-        Toast.makeText(this, mainTextStringId, Toast.LENGTH_LONG).show()
-    }
-
-    //endregion
+    //endregion Overriden Methods
 
     //region Private Methods
-
 
     private fun initDrawerMenu() {
         toggle = object : ActionBarDrawerToggle(
@@ -221,13 +178,6 @@ class MainActivity : BaseActivityDI() {
     }
 
     //endregion Private Methods
-
-    companion object {
-
-        private val TAG = MainActivity::class.java.simpleName
-
-        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-    }
 }
 
 

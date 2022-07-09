@@ -16,17 +16,20 @@
 package com.ced.gweather.commons.ui
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import com.ced.commons.ui.extensions.displayKeyboard
 import com.ced.commons.ui.extensions.gone
 import com.ced.commons.ui.extensions.visible
+import com.ced.gweather.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -62,13 +65,33 @@ abstract class BaseFragment : Fragment() {
         hideKeyboard()
     }
 
-    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
-
     internal fun showSnackBar(@StringRes message: Int) =
         Snackbar.make(viewContainer, message, Snackbar.LENGTH_SHORT).show()
 
     internal fun showSnackBar(message: String) =
         Snackbar.make(viewContainer, message, Snackbar.LENGTH_SHORT).show()
+
+    internal fun showSnackBar(
+        message: String,
+        actionStr: String,
+        duration: Int,
+        v: View? = null,
+        onActionCallback: (() -> Unit)? = null
+    ) = Snackbar.make(v ?: viewContainer, message, duration)
+        .setAction(actionStr) {
+            onActionCallback.let {
+                if (it != null) {
+                    it()
+                }
+            }
+        }
+        .setActionTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorPrimary
+            )
+        )
+        .show()
 
     open fun onBackPressed() {
         close()
@@ -111,26 +134,21 @@ abstract class BaseFragment : Fragment() {
         title: String = "Application Failure",
         message: String = "Sorry, we encountered an error performing the action.",
         onDismissCallback: (() -> Unit)? = null
-    ) =
-
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setNeutralButton("Close", null)
-            .setOnDismissListener {
-                onDismissCallback.let {
-                    if (it != null) {
-                        it()
-                    }
+    ) = MaterialAlertDialogBuilder(requireContext())
+        .setTitle(title)
+        .setMessage(message)
+        .setNeutralButton("Close", null)
+        .setOnDismissListener {
+            onDismissCallback.let {
+                if (it != null) {
+                    it()
                 }
             }
-            .create()
-            .show()
-
+        }
+        .create()
+        .show()
 }
 
 val BaseFragment.viewContainer: View get() = (activity as BaseActivity).frameContent
-
-val BaseFragment.appContext: Context get() = activity?.applicationContext!!
 
 

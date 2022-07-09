@@ -1,12 +1,9 @@
 package com.ced.gweather.weather.ui.weatherhome
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -21,7 +18,6 @@ import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
 import com.ced.gweather.weather.features.weatherhome.FailedToLoadCurrentWeather
-import com.ced.gweather.weather.features.weatherhome.FailedToLoadWeatherRecords
 import com.ced.gweather.weather.ui.BaseFragmentDI
 import com.ced.gweather_core.domain.model.WeatherModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -74,9 +70,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherSunsetVal.text =
             SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunset?.toLong() ?: 0))
 
-        tvWeatherWindVal.text = if (weather?.wind?.gust.toString()
-                .isEmpty()
-        ) weather?.wind?.gust.toString() else weather?.wind?.speed?.toString()
+        tvWeatherWindVal.text =
+            weather?.wind?.gust.toString().ifEmpty { weather?.wind?.speed?.toString() }
         tvWeatherPressureVal.text = weather?.main?.pressure.toString()
         tvWeatherHumidityVal.text = weather?.main?.humidity.toString()
         tvWeatherVisibilityVal.text = "${weather?.visibility?.div(1000).toString()} km"
@@ -94,7 +89,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     }
 
     private fun getLastLocation() {
-        fusedLocationClient?.lastLocation!!.addOnCompleteListener(requireActivity()) { task ->
+        fusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
 
             if (task.isSuccessful && task.result != null) {
                 val lat = task.result.latitude
@@ -114,13 +109,6 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
     private fun showMessage(string: String) {
         Toast.makeText(context, string, Toast.LENGTH_LONG).show()
-    }
-
-    private fun showSnackbar(
-        mainTextStringId: String, actionStringId: String,
-        listener: View.OnClickListener
-    ) {
-        Toast.makeText(context, mainTextStringId, Toast.LENGTH_LONG).show()
     }
 
     private fun checkPermissions(): Boolean {
@@ -146,11 +134,14 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         )
         if (shouldProvideRationale) {
             Logger.i(TAG, "Displaying permission rationale to provide additional context.")
-            showSnackbar(
-                "Location permission is needed for core functionality", "Okay"
-            ) {
-                startLocationPermissionRequest()
-            }
+
+            showSnackBar(
+                "Location permission is needed for core functionality",
+                "Okay",
+                Snackbar.LENGTH_LONG,
+                onActionCallback = {
+                    startLocationPermissionRequest()
+                })
         } else {
             Logger.i(TAG, "Requesting permission")
             startLocationPermissionRequest()

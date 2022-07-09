@@ -32,8 +32,6 @@
 
     <color name="delete_color">#dc3d41</color>
 
-    <color name="text_field_color">#f3fbf5</color>
-    <color name="icon_gray_color">#757575</color>
     <color name="field_outline_gray_color" tools:override="true">#dcdbe0</color>
     <color name="field_hint_color">#676769</color>
     <color name="field_text_color">@color/primary_text</color>
@@ -42,29 +40,6 @@
     <color name="separator_color">#d8d8d8</color>
     <color name="row_item_activated_background">#DFDFDF</color>
 
-    <!--Inventory Stock Status Color -->
-    <color name="inventory_stock_status_out_of_stock">#dc3d41</color>
-    <color name="inventory_stock_status_low">#dc8f3d</color>
-    <color name="inventory_stock_status_in_stock">#999999</color>
-
-    <!--Image Button Random Color-->
-    <color name="color_yellow">#f6cc5c</color>
-    <color name="color_red_orange">#f08b5d</color>
-    <color name="color_red">#eb5c54</color>
-    <color name="color_violet">#c281a3</color>
-    <color name="color_blue">#93b9f8</color>
-    <color name="color_baby_blue">#1a3a63</color>
-    <color name="color_peach">#464e5b</color>
-    <color name="color_light_green">#98e1a7</color>
-    <color name="color_green_brown">#94cf7d</color>
-    <color name="color_green_blue">#e2e490</color>
-    <color name="color_orange">#fdb14f</color>
-    <color name="color_dark_green_blue">#cad0ea</color>
-
     <color name="status">#74F8DDDD</color>
-
-    <!-- PIN SCREEN -->
-    <color name="pin_bg_color">#29b564</color>
-    <color name="pin_circle_numm_bg_color">#25a35a</color>
 
 </resources>

@@ -37,12 +37,12 @@ class CurrentWeatherViewModel
             override fun onSuccess(result: WeatherModel) {
                 weather.value = result
 
+                // Add to Cloud Firestore every fetch from OpenWeatherMap (only when user opens the app)
                 if (sessionRepository.isAllowedToSave == true) {
                     result.run {
                         dateCreated = Calendar.getInstance().time
                         userId = sessionRepository.loggedInUserId
 
-                        // Add to Firestore every fetch from OpenWeatherMap
                         addWeatherRecordUseCase.execute(object :
                             EmptySingleObserver<WeatherModel>() {
                             override fun onSuccess(result: WeatherModel) {

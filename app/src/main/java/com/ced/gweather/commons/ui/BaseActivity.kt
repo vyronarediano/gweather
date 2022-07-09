@@ -84,7 +84,7 @@ abstract class BaseActivity : AppCompatActivity() {
  * Method creates fragment transaction and replace current fragment with new one.
  *
  * @param newFragment    new fragment used for replacement.
- * @param transactionTag text identifying fragment transaction.
+ * @param tag text identifying fragment transaction.
  */
 fun FragmentActivity?.replaceFragment(newFragment: Fragment, tag: String?) {
     val manager = this?.supportFragmentManager

@@ -28,6 +28,7 @@ import com.ced.gweather.auth.features.FailedToLoginUser
 import com.ced.gweather.auth.features.FailedToRegisterUser
 import com.ced.gweather.databinding.LoginFragmentBinding
 import com.ced.gweather.weather.ui.BaseFragmentDI
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : BaseFragmentDI() {
@@ -91,13 +92,6 @@ class LoginFragment : BaseFragmentDI() {
         }
     }
 
-    private fun showSnackbar(
-        mainTextStringId: String, actionStringId: String,
-        listener: View.OnClickListener
-    ) {
-        Toast.makeText(context, mainTextStringId, Toast.LENGTH_LONG).show()
-    }
-
     private fun checkPermissions(): Boolean {
         val permissionState = ActivityCompat.checkSelfPermission(
             context!!,
@@ -122,13 +116,18 @@ class LoginFragment : BaseFragmentDI() {
         )
         if (shouldProvideRationale) {
             Logger.i(TAG, "Displaying permission rationale to provide additional context.")
-            showSnackbar(
-                "Location permission is needed for core functionality", "Okay"
-            ) {
-                startLocationPermissionRequest()
-            }
+
+            showSnackBar(
+                "Location permission is needed for core functionality",
+                "Okay",
+                Snackbar.LENGTH_LONG,
+                view?.rootView,
+                onActionCallback = {
+                    startLocationPermissionRequest()
+                })
         } else {
             Logger.i(TAG, "Requesting permission")
+
             startLocationPermissionRequest()
         }
     }
@@ -229,8 +228,7 @@ class LoginFragment : BaseFragmentDI() {
             hideKeyboard()
             clearAllRegFields()
 
-            Toast.makeText(requireContext(), "Account successfully created", Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(requireContext(), R.string.login_create_account_success, Toast.LENGTH_LONG).show()
         }
     }
 
