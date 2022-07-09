@@ -7,7 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.ced.commons.util.toDateTimeString
 import com.ced.gweather.R
@@ -20,20 +19,20 @@ import com.ced.gweather_core.domain.model.WeatherModel
  */
 
 class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsViewModel) :
-    RecyclerView.Adapter<WeatherRecordsAdapter.WeathearRecordViewHolder>() {
+    RecyclerView.Adapter<WeatherRecordsAdapter.WeatherRecordViewHolder>() {
 
     private var weatherRecords: MutableList<WeatherModel> = mutableListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): WeathearRecordViewHolder {
+    ): WeatherRecordViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return WeathearRecordViewHolder(parent, weatherRecordsViewModel, inflater)
+        return WeatherRecordViewHolder(parent, weatherRecordsViewModel, inflater)
 
     }
 
-    override fun onBindViewHolder(holder: WeathearRecordViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WeatherRecordViewHolder, position: Int) {
         holder.bind(weatherRecords[position])
     }
 
@@ -45,7 +44,7 @@ class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsV
         notifyDataSetChanged()
     }
 
-    class WeathearRecordViewHolder(
+    class WeatherRecordViewHolder(
         val parent: ViewGroup,
         private val weatherRecordsViewModel: WeatherRecordsViewModel,
         inflater: LayoutInflater
@@ -63,13 +62,16 @@ class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsV
         }
 
         fun bind(weather: WeatherModel) {
-
-            Glide.with(parent.context)
-                .load("http://openweathermap.org/img/wn/" + weather.weather?.first()?.icon + "@2x.png")
-                .signature(ObjectKey(System.currentTimeMillis()))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .format(DecodeFormat.PREFER_ARGB_8888)
-                .into(weatherRecordImgView!!)
+            parent.context.let {
+                weatherRecordImgView?.apply {
+                    Glide.with(it)
+                        .load("http://openweathermap.org/img/wn/" + weather.weather?.first()?.icon + "@2x.png")
+                        .signature(ObjectKey(System.currentTimeMillis()))
+                        .format(DecodeFormat.PREFER_ARGB_8888)
+                        .dontAnimate()
+                        .into(this)
+                }
+            }
 
             val loc = weather.name
             val desc = weather.weather?.first()?.description?.capitalize()

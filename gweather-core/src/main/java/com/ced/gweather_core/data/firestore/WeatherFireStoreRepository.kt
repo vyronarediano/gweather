@@ -67,10 +67,10 @@ class WeatherFireStoreRepository @Inject constructor() :
         }
     }
 
-    override fun getDataFromApi(currentLocCityCountry: String): Single<WeatherModel> {
+    override fun getDataFromApi(currentLocCityCountry: String, apiKey: String): Single<WeatherModel> {
         return Single.create { emitter ->
             disposable.add(
-                weatherApiService.getDataService(currentLocCityCountry)
+                weatherApiService.getDataService(currentLocCityCountry, apiKey)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(object : DisposableSingleObserver<WeatherModel>() {

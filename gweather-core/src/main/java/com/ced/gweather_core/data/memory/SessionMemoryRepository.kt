@@ -35,10 +35,17 @@ class SessionMemoryRepository @Inject constructor(context: Context) :
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
+    private val KEY_OPEN_WEATHER_MAP = "KEY_OPEN_WEATHER_MAP"
     private val KEY_LOGGED_IN_USER_ID = "GWEATHER_PREFERENCES_USER_ID"
     private val KEY_LOGGED_IN_USER_NAME = "GWEATHER_PREFERENCES_USER_NAME"
     private val KEY_LOGGED_IN_USER_EMAIL = "GWEATHER_PREFERENCES_USER_EMAIL"
     private val KEY_ALLOWED_TO_SAVE = "KEY_ALLOWED_TO_SAVE"
+
+    override var openWeatherMapKey: String?
+        get() = sharedPreferences.getString(KEY_OPEN_WEATHER_MAP, "172839f8545fe79053427373d8191a27")
+        set(value) {
+            sharedPreferences.edit().putString(KEY_OPEN_WEATHER_MAP, value).apply()
+        }
 
     override var loggedInUserId: String?
         get() = sharedPreferences.getString(KEY_LOGGED_IN_USER_ID, null)

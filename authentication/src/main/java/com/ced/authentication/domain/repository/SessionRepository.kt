@@ -6,6 +6,11 @@ package com.ced.authentication.domain.repository
  */
 interface SessionRepository {
 
+    /**
+     * Key we need to get the current weather from OpenWeatherMap
+     */
+    var openWeatherMapKey: String?
+
     var loggedInUserId: String?
 
     var loggedInUserName: String?

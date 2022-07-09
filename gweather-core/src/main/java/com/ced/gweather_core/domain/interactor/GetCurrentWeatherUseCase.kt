@@ -1,5 +1,6 @@
 package com.ced.gweather_core.domain.interactor
 
+import com.ced.authentication.domain.repository.SessionRepository
 import com.ced.commons.clean.executor.PostExecutionThread
 import com.ced.commons.clean.executor.ThreadExecutor
 import com.ced.commons.clean.interactor.SingleUseCase
@@ -15,10 +16,11 @@ import javax.inject.Inject
 class GetCurrentWeatherUseCase @Inject constructor(
     threadExecutor: ThreadExecutor,
     postExecutionThread: PostExecutionThread,
-    private var weatherRepository: WeatherRepository
+    private var weatherRepository: WeatherRepository,
+    private var sessionRepository: SessionRepository
 ) : SingleUseCase<WeatherModel, String>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseSingle(params: String?): Single<WeatherModel> {
-        return weatherRepository.getDataFromApi(params.orEmpty())
+        return weatherRepository.getDataFromApi(params.orEmpty(), sessionRepository.openWeatherMapKey.orEmpty())
     }
 }

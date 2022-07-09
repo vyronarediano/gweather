@@ -19,7 +19,7 @@ interface WeatherRepository {
     /**
      * Gets data from OpenWeatherMap
      */
-    fun getDataFromApi(currentLocCityCountry: String): Single<WeatherModel>
+    fun getDataFromApi(currentLocCityCountry: String, apiKey: String): Single<WeatherModel>
 
     /**
      * Saves weather records to Firestore DB
