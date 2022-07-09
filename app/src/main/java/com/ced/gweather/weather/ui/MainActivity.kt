@@ -1,11 +1,7 @@
 package com.ced.gweather.weather.ui
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -16,16 +12,15 @@ import com.ced.authentication.domain.model.User
 import com.ced.commons.ui.extensions.displayKeyboard
 import com.ced.commons.ui.extensions.viewModel
 import com.ced.commons.ui.observe
-import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
 import com.ced.gweather.auth.AuthenticateActivity
 import com.ced.gweather.commons.ui.BaseFragment
+import com.ced.gweather.databinding.NavHeaderMainBinding
 import com.ced.gweather.weather.features.drawer.NavHeaderViewModel
 import com.ced.gweather.weather.ui.weatherhome.WeatherHomeFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
+
 
 /**
  * @author Cedierick Vyron Arediano
@@ -47,6 +42,7 @@ class MainActivity : BaseActivityDI() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         appComponent.inject(this)
 
         navHeaderViewModel = viewModel(viewModelFactory) {
@@ -157,8 +153,9 @@ class MainActivity : BaseActivityDI() {
     }
 
     private fun bindLoggedInUser(user: User?) {
-        tvUserFullName.text = "Hello, ${user?.name}."
-        tvUserEmail.text = user?.email
+        val viewHeader = navigationView.getHeaderView(0)
+        val binding = NavHeaderMainBinding.bind(viewHeader)
+        binding.user = user
     }
 
     private fun showLogoutConfirmation() {
