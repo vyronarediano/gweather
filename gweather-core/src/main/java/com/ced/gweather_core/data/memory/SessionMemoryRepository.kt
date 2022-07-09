@@ -24,12 +24,10 @@ class SessionMemoryRepository @Inject constructor(context: Context) :
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    private val PREFERENCES_APP_ID = "com.ced.gweather"
-
     private val sharedPreferences =
         EncryptedSharedPreferences.create(
             context,
-            PREFERENCES_APP_ID,
+            "com.ced.gweather",
             masterKeyAlias,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
@@ -42,7 +40,7 @@ class SessionMemoryRepository @Inject constructor(context: Context) :
     private val KEY_ALLOWED_TO_SAVE = "KEY_ALLOWED_TO_SAVE"
 
     override var openWeatherMapKey: String?
-        get() = sharedPreferences.getString(KEY_OPEN_WEATHER_MAP, "172839f8545fe79053427373d8191a27")
+        get() = sharedPreferences.getString(KEY_OPEN_WEATHER_MAP, "YOUR_API_KEY")
         set(value) {
             sharedPreferences.edit().putString(KEY_OPEN_WEATHER_MAP, value).apply()
         }

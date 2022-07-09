@@ -1,7 +1,7 @@
 
-# GWeather
+# GWeather [Work in progress 🚧]
 
-A beautiful and minimal weather app that displays the current weather forecast of the city to the user using the current location.
+A beautiful and minimal weather app illustrating Android development best practices that displays the current weather forecast of the city to the user using the current location.
 
 
 
@@ -11,12 +11,9 @@ A beautiful and minimal weather app that displays the current weather forecast o
 
 - Modular Android app architecture
 - MVVM + Clean
-
-- Sign-in and Registration
-- Secure Login Authentication
+- Secure Authentication & Login/Registration using Cloud Firestore
 - Current Weather Data
 - List of Weather fetched
-
 
 
 ## Tech Stack
@@ -31,7 +28,7 @@ A beautiful and minimal weather app that displays the current weather forecast o
 
 **Database & Authentication:** Google Firebase Firestore
 
-**Others:** Android Jetpack, RxJava, RxKotlin, Espresso, Glide, LiveData
+**Others:** Android Jetpack, RxJava, RxKotlin, Espresso, LiveData
 
 
 
@@ -41,10 +38,23 @@ To be able to get the data from OpenWeatherApp, you need to register to their we
 
 #### Get current weather API
 
-Once you already have the API key, go to **WeatherApi** interface and paste your API_KEY
+Once you already have the API key, go to **SessionMemoryRepository** class and paste your API_KEY
 
-```http
-  GET data/2.5/weather?&units=metric&appid={YOUR_API_KEY}
+
+```kotlin
+  sharedPreferences.getString(KEY_OPEN_WEATHER_MAP, "YOUR_API_KEY")
 ```
 
 
+
+## Acknowledgements
+- [Google Firebase](https://firebase.google.com/)
+- [Google Fonts & Icons](https://fonts.google.com/)
+- [LottieFiles](https://lottiefiles.com/)
+- [Designevo - Free Logo](https://www.designevo.com/)
+- [README Editor](https://readme.so/)
+
+
+## Feedback
+
+If you have any feedback, please reach out to us at vyronarediano@gmail.com
