@@ -170,6 +170,7 @@ class MainActivity : BaseActivityDI() {
             }
             .setPositiveButton("Yes") { _, _ ->
                 run {
+                    finish()
                     startActivity(Intent(this, AuthenticateActivity::class.java))
                 }
             }
