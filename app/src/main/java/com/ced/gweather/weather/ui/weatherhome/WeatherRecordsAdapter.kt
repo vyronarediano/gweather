@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.ced.commons.util.toDateTimeString
 import com.ced.gweather.R
@@ -62,13 +63,14 @@ class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsV
         }
 
         fun bind(weather: WeatherModel) {
-            parent.context.let {
+            val imageUrl = "http://openweathermap.org/img/wn/${weather.weather?.first()?.icon}@2x.png"
+            parent.context.let { context ->
                 weatherRecordImgView?.apply {
-                    Glide.with(it)
-                        .load("http://openweathermap.org/img/wn/" + weather.weather?.first()?.icon + "@2x.png")
+                    Glide.with(context)
+                        .load(imageUrl)
                         .signature(ObjectKey(System.currentTimeMillis()))
+                        .transition(DrawableTransitionOptions.withCrossFade())
                         .format(DecodeFormat.PREFER_ARGB_8888)
-                        .dontAnimate()
                         .into(this)
                 }
             }
