@@ -43,7 +43,7 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin_half"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/ivWeatherIcon"
+                app:layout_constraintBottom_toTopOf="@+id/layoutWeatherIcons"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -65,32 +65,45 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivWeatherIcon"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <FrameLayout
+                android:id="@+id/layoutWeatherIcons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieSunnyView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="14444-sunny.json"
-                app:lottie_loop="true" />
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieSunnyView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="14444-sunny.json"
+                    app:lottie_loop="true" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieMoonView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="10686-the-moon.json"
+                    app:lottie_loop="true" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivWeatherIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+            </FrameLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutWeatherDeg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 app:layout_constraintBottom_toTopOf="@+id/layoutWeatherFieldsContent"
                 app:layout_constraintEnd_toEndOf="parent"

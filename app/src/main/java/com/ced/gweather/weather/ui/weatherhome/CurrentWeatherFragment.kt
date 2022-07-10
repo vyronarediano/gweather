@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.ui.extensions.gone
 import com.ced.commons.ui.extensions.viewModel
@@ -103,6 +102,19 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherPressureVal.text = weather?.main?.pressure.toString()
         tvWeatherHumidityVal.text = weather?.main?.humidity.toString()
         tvWeatherVisibilityVal.text = "${weather?.visibility?.div(1000).toString()} km"
+
+        val isNight: Boolean
+        val cal = Calendar.getInstance()
+        val hour = cal[Calendar.HOUR_OF_DAY]
+        isNight = hour < 6 || hour > 18
+
+        if (isNight) {
+            lottieMoonView.visible()
+            lottieSunnyView.gone()
+        } else {
+            lottieMoonView.gone()
+            lottieSunnyView.visible()
+        }
 
         Glide.with(requireActivity())
             .load("http://openweathermap.org/img/wn/" + weather?.weather?.first()?.icon + "@2x.png")
