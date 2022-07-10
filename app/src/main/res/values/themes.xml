@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="BaseTheme" />
 
@@ -7,13 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorOnBackground">@color/primary_text</item>
-        <item name="actionModeStyle">@style/GWeatherActionModeTheme</item>
-        <item name="materialCalendarFullscreenTheme">
-            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
-        </item>
         <item name="android:fontFamily">@font/roboto_condensed_regular</item>
-
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
         <!-- For Drawer -->
         <item name="colorStateNavigationItem">@color/drawer_item_text_color</item>

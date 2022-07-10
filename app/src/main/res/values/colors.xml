@@ -20,17 +20,12 @@
     <color name="colorWidgetBackgroundLightGreen">#eefcf2</color>
     <color name="colorWidgetText">@color/colorPrimary</color>
     <color name="colorWidgetBackgroundLightGray">#f8f8f8</color>
-    <color name="colorWidgetText2">@color/primary_text</color>
-    <color name="colorWidgetIcon">#3f4042</color>
-    <color name="colorWidgetIconSecondary">#626367</color>
 
     <color name="drawer_item_text_color">#374334</color>
-    <color name="drawer_item_bg_selected">#eaf6e6</color>
+    <color name="drawer_item_bg_selected">#ecf7ff</color>
     <color name="bottom_nav_icon_and_text_color">#626367</color>
 
     <color name="header_text_secondary">#9d9d9d</color>
-
-    <color name="delete_color">#dc3d41</color>
 
     <color name="field_outline_gray_color" tools:override="true">#dcdbe0</color>
     <color name="field_hint_color">#676769</color>
@@ -39,7 +34,5 @@
     <color name="placeholder_background">#dddddd</color>
     <color name="separator_color">#d8d8d8</color>
     <color name="row_item_activated_background">#DFDFDF</color>
-
-    <color name="status">#74F8DDDD</color>
 
 </resources>

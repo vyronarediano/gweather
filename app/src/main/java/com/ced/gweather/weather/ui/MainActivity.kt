@@ -153,9 +153,13 @@ class MainActivity : BaseActivityDI() {
     }
 
     private fun bindLoggedInUser(user: User?) {
-        val viewHeader = navigationView.getHeaderView(0)
-        val binding = NavHeaderMainBinding.bind(viewHeader)
-        binding.user = user
+        try {
+            val viewHeader = navigationView.getHeaderView(0)
+            val binding = NavHeaderMainBinding.bind(viewHeader)
+            binding.user = user
+        } catch (e: Exception) {
+            // do nothing
+        }
     }
 
     private fun showLogoutConfirmation() {

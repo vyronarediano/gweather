@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class CurrentWeatherFragment : BaseFragmentDI() {
 
@@ -58,8 +59,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     }
 
     private fun renderCurrentWeather(weather: WeatherModel?) {
-        tvDegreeVal.text = weather?.main?.temp.toString()
-        tvWeatherFeelsLike.text = "Feels like ${weather?.main?.feelsLike.toString()}°".toUpperCase()
+        tvDegreeVal.text = weather?.main?.temp?.roundToInt().toString()
+        tvWeatherFeelsLike.text = "Feels like ${weather?.main?.feelsLike?.roundToInt().toString()}°".toUpperCase()
         tvWeatherDesc.text = weather?.weather?.first()?.description?.capitalize()
 
         val sunrise = weather?.sys?.sunrise?.times(1000)

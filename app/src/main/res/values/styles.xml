@@ -17,12 +17,8 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
-        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
-    </style>
-
-    <style name="Custom_MaterialCalendar.Fullscreen" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
-        <item name="android:windowFullscreen">false</item>
+    <style name="GWeatherToolbarTheme.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_size_toolbar_title</item>
     </style>
 
     <style name="GWeatherToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
@@ -34,20 +30,6 @@
         <item name="drawerArrowStyle">@style/GWeatherToolbar.DrawerHamburger</item>
         <item name="android:fontFamily">@font/roboto_condensed_bold</item>
         <item name="android:homeAsUpIndicator">@drawable/round_arrow_back</item>
-    </style>
-
-    <style name="GWeatherToolbarTheme.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">@dimen/text_size_toolbar_title</item>
-    </style>
-
-    <style name="GWeatherActionModeTheme" parent="@style/Widget.AppCompat.ActionMode">
-        <item name="background">@color/colorPrimaryDark</item>
-        <item name="titleTextStyle">@style/GWeatherActionModeTheme.TitleText</item>
-        <item name="closeItemLayout">@layout/context_menu_close</item>
-    </style>
-
-    <style name="GWeatherActionModeTheme.TitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
-        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="GWeatherToolbar.TitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
@@ -62,16 +44,6 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="SalesButton" parent="Theme.MaterialComponents">
-        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnSurface">@color/colorAccent</item>
     </style>
 
     <style name="SecondaryButton" parent="Theme.MaterialComponents">
@@ -105,34 +77,6 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="ImageButtonColor">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
-    </style>
-
-    <style name="roundedImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/card_corner_radius</item>
-    </style>
-
-    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-
-        <!-- Set this to true if you want Full Screen without status bar -->
-        <item name="android:windowFullscreen">false</item>
-
-        <item name="android:windowIsFloating">false</item>
-
-        <!-- This is important! Don't forget to set window background -->
-        <item name="android:windowBackground">@color/colorWhite</item>
-
-        <!-- Additionally if you want animations when dialog opening -->
-        <item name="android:windowEnterAnimation">@anim/nav_default_pop_enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/nav_default_pop_exit_anim</item>
-    </style>
-
     <style name="DrawerTextTypeface" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_condensed_bold</item>
     </style>
@@ -146,24 +90,6 @@
         <item name="boxCornerRadiusTopEnd">@dimen/fields_radius</item>
         <item name="boxCornerRadiusTopStart">@dimen/fields_radius</item>
         <item name="hintTextColor">@color/field_hint_color</item>
-    </style>
-
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
-    </style>
-
-    <style name="ModalBottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="backgroundTint">@color/colorWhite</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
-    </style>
-
-    <style name="ShapeAppearance.App.LargeComponent" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">16dp</item>
-        <item name="cornerSizeTopLeft">16dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

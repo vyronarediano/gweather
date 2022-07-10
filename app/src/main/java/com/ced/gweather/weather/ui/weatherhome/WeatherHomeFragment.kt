@@ -75,7 +75,7 @@ class WeatherHomeFragment: BaseFragmentDI() {
     }
 
     companion object {
-        private val TAB_TITLES = arrayOf("Current Weather", "Activity")
+        private val TAB_TITLES = arrayOf("Current Weather", "Records")
 
         @JvmStatic
         fun newInstance() = WeatherHomeFragment()
