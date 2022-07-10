@@ -1,4 +1,12 @@
 <resources>
+    <declare-styleable name="dark_theme">
+        <attr name="background_color" format="color"/>
+        <attr name="text_color" format="color"/>
+        <attr name="icon_color" format="color"/>
+    </declare-styleable>
+
+    <attr name="toolbarStyle" format="reference"/>
+
     <attr name="colorStateNavigationItem" format="color" />
     <attr name="colorNavigationItemNormal" format="color"/>
     <attr name="colorNavigationItemSelected" format="color" />

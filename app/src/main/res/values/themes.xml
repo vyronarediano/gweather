@@ -1,19 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseTheme" />
+    <style name="AppTheme" parent="Theme.Light" />
 
-    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <style name="Theme.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorOnBackground">@color/primary_text</item>
-        <item name="actionModeStyle">@style/GWeatherActionModeTheme</item>
-        <item name="materialCalendarFullscreenTheme">
-            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
-        </item>
-        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
-
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
 
         <!-- For Drawer -->
         <item name="colorStateNavigationItem">@color/drawer_item_text_color</item>
@@ -23,6 +16,14 @@
         <item name="colorNavigationItemBackgroundPressed">@color/drawer_item_bg_selected</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
         <item name="android:listDivider">@drawable/menu_divider</item>
+
+        <!-- Font -->
+        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
+
+        <!-- LIGHT MODE: Customize your theme here -->
+        <item name="background_color">@color/colorWhite</item>
+        <item name="text_color">@color/primary_text</item>
+        <item name="icon_color">@color/colorIconNightMode</item>
 
     </style>
 </resources>

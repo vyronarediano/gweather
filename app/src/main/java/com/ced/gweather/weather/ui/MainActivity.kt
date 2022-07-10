@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -20,6 +21,7 @@ import com.ced.gweather.weather.features.drawer.NavHeaderViewModel
 import com.ced.gweather.weather.ui.weatherhome.WeatherHomeFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 
 /**
@@ -43,16 +45,21 @@ class MainActivity : BaseActivityDI() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.Theme_Dark)
+        } else {
+            setTheme(R.style.Theme_Light)
+        }
+
         appComponent.inject(this)
+
+        initToolbar()
+        initDrawerMenu()
+        initFragmentManager(fragmentManager)
 
         navHeaderViewModel = viewModel(viewModelFactory) {
             observe(user, ::bindLoggedInUser)
         }
-
-        initToolbar()
-        initDrawerMenu()
-
-        initFragmentManager(fragmentManager)
 
         navHeaderViewModel.loadLoggedInUser()
     }
@@ -153,9 +160,13 @@ class MainActivity : BaseActivityDI() {
     }
 
     private fun bindLoggedInUser(user: User?) {
-        val viewHeader = navigationView.getHeaderView(0)
-        val binding = NavHeaderMainBinding.bind(viewHeader)
-        binding.user = user
+        try {
+            val viewHeader = navigationView.getHeaderView(0)
+            val binding = NavHeaderMainBinding.bind(viewHeader)
+            binding.user = user
+        } catch (e: Exception) {
+            // do nothing
+        }
     }
 
     private fun showLogoutConfirmation() {

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_night_mode"
+        android:icon="@drawable/outline_dark_mode_black_24"
+        android:orderInCategory="100"
+        android:title="Night mode"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_light_mode"
+        android:icon="@drawable/outline_light_mode_black_24"
+        android:orderInCategory="200"
+        android:title="Light mode"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+</menu>

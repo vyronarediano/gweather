@@ -12,8 +12,6 @@
     <color name="transparent">#00000000</color>
 
     <color name="colorPrimaryBackground">#f8f8f8</color>
-    <color name="colorTotalAmount">#4bc1e1</color>
-    <color name="colorActionBarBg">#ffff</color>
     <color name="colorActionBarText">#2d2d2d</color>
 
     <color name="colorWidgetBackgroundLightRed">#19DC3D41</color>
@@ -40,6 +38,8 @@
     <color name="separator_color">#d8d8d8</color>
     <color name="row_item_activated_background">#DFDFDF</color>
 
-    <color name="status">#74F8DDDD</color>
+    <!-- Night Mode colors -->
+    <color name="colorBackgroundNightMode">#22262f</color>
+    <color name="colorIconNightMode">#858c9c</color>
 
 </resources>
