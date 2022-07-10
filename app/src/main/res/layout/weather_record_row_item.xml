@@ -9,7 +9,7 @@
     android:layout_marginTop="@dimen/card_list_item_margin"
     android:layout_marginEnd="@dimen/cards_margin"
     android:layout_marginBottom="@dimen/card_list_item_margin"
-    android:background="@drawable/weather_records_row_item_bg">
+    android:background="@drawable/weather_field_bg">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivWeatherRecordIcon"

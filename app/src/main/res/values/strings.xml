@@ -29,6 +29,7 @@
 
     <string name="unable_to_get_current_weather">Unable to get the current weather. Check your internet connection and try again</string>
     <string name="unable_to_load_weather_records">Unable to get the weather records. Check your internet connection and try again</string>
+    <string name="unable_to_get_location"> No location detected. Make sure location is enabled on the device.</string>
 
     <string name="nav_header_desc">Navigation header</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

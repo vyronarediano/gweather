@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -96,6 +97,7 @@ class MainActivity : BaseActivityDI() {
 
     private fun initToolbar() {
         toolbar = findViewById(R.id.toolbar)
+        toolbar?.setBackgroundColor(ContextCompat.getColor(this, R.color.weather_current_bg))
         setSupportActionBar(toolbar)
     }
 

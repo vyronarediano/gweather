@@ -55,6 +55,10 @@ class CurrentWeatherViewModel
         }, params = currentLocCityCountry.value)
     }
 
+    fun setIsAllowedToSave(isAllowed: Boolean) {
+        sessionRepository.isAllowedToSave = isAllowed
+    }
+
 
     fun getAddressFromLocation(lat: Double, lng: Double, context: Context): List<Address> {
         var addressList: List<Address> = ArrayList()

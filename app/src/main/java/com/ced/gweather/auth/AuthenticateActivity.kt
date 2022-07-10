@@ -36,7 +36,7 @@ class AuthenticateActivity : AppCompatActivity() {
                 }
                 else -> {
                     Snackbar.make(findViewById(android.R.id.content), "Permission was denied.", Snackbar.LENGTH_LONG)
-                        .setAction("GWEATHER APP SETTING") {
+                        .setAction("APP SETTING") {
                             showIntentAppSettingsScreen()
                         }
                         .setActionTextColor(

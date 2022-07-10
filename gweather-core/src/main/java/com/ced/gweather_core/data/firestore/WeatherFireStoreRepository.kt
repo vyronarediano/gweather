@@ -47,7 +47,7 @@ class WeatherFireStoreRepository @Inject constructor() :
             } else {
                 emitter.onNext(weatherRecords.asSequence().filter {
                     it.userId.containsIgnoreCase(userId)
-                }.toList())
+                }.sortedByDescending { it.dateCreated }.toList())
             }
         }
     }
@@ -59,7 +59,7 @@ class WeatherFireStoreRepository @Inject constructor() :
 
             val finalWeatherRecords = weatherRecords.asSequence().filter {
                 it.userId.containsIgnoreCase(userId)
-            }.toList()
+            }.sortedByDescending { it.dateCreated }.toList()
 
             emitter.onNext(finalWeatherRecords)
         }.addOnFailureListener { exception ->

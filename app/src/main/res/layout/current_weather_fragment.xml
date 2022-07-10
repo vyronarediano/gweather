@@ -3,349 +3,392 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin_half"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/ivWeatherIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="19dp"
-            android:layout_height="19dp"
-            android:src="@drawable/location"
-            android:tint="@color/colorPrimary" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWeatherCurrentLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/activity_horizontal_margin_half"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivWeatherIcon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:layout_height="match_parent"
+    android:background="@color/weather_current_bg">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieSunnyView"
+        android:id="@+id/lottieEmptyView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="14444-sunny.json"
+        app:lottie_fileName="13525-empty.json"
         app:lottie_loop="true" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutWeatherDeg"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        app:layout_constraintBottom_toTopOf="@+id/layoutWeatherFieldsContent"
+        android:theme="@style/Theme.MaterialComponents.Light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWeatherDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sunny"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/text_size_header"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCurrentWeather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutDegree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvWeatherDesc">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDegreeVal"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/ivWeatherIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:src="@drawable/location"
+                    android:tint="@color/colorPrimary" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWeatherCurrentLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin_half"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivWeatherIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieSunnyView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/layoutWeatherDeg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="14444-sunny.json"
+                app:lottie_loop="true" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutWeatherDeg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:text="31"
-                android:textColor="@color/primary_text"
-                android:textSize="60sp" />
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintBottom_toTopOf="@+id/layoutWeatherFieldsContent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDegrees"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWeatherDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sunny"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text_size_header"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutDegree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvWeatherDesc">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDegreeVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:text="31"
+                        android:textColor="@color/primary_text"
+                        android:textSize="60sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDegrees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="\u2103"
+                        android:textColor="@color/primary_text"
+                        android:textSize="40dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvWeatherFeelsLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FEELS LIKE  31 \u2103"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text_size_large"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutDegree" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutWeatherFieldsContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="\u2103"
-                android:textColor="@color/primary_text"
-                android:textSize="40dp" />
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutSunrise"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWeatherFeelsLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FEELS LIKE  31 \u2103"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/text_size_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutDegree" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/sunrise"
+                        android:tint="@color/weather_current_icon" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_sunrise"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutWeatherFieldsContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherSunriseVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="5:30am" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutSunrise"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/sunrise"
-                android:tint="@color/primary_text" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutSunset"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@+id/layoutSunrise"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_sunrise"
-                android:textSize="@dimen/text_size_large" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/sunset"
+                        android:tint="@color/weather_current_icon" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherSunriseVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="5:30am" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_sunset"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherSunsetVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="6:29pm" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutSunset"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/layoutSunrise"
-            app:layout_constraintTop_toTopOf="parent">
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/sunset"
-                android:tint="@color/primary_text" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutWind"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@+id/layoutSunset"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_sunset"
-                android:textSize="@dimen/text_size_large" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/wind"
+                        android:tint="@color/weather_current_icon" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherSunsetVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="6:29pm" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_wind"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherWindVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.8"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="2.8" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutWind"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/layoutSunset"
-            app:layout_constraintTop_toTopOf="parent">
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/wind"
-                android:tint="@color/primary_text" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutPressure"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutSunrise">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_wind"
-                android:textSize="@dimen/text_size_large" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/pressure"
+                        android:tint="@color/weather_current_icon" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherWindVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.8"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="2.8" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_pressure"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherPressureVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1201"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="1201" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutHumidity"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layoutPressure"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutSunset">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/humidity"
+                        android:tint="@color/weather_current_icon" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_humidity"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherHumidityVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="48"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="48" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layoutVisibility"
+                    android:layout_width="@dimen/weather_field_width"
+                    android:layout_height="@dimen/weather_field_height"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:background="@drawable/weather_field_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/layoutHumidity"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutWind">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/visibility"
+                        android:tint="@color/weather_current_icon" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_regular"
+                        android:text="@string/weather_visibility"
+                        android:textColor="@color/weather_current_text"
+                        android:textSize="@dimen/text_size_large" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWeatherVisibilityVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10 km"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="10 km" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutPressure"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutSunrise">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/pressure"
-                android:tint="@color/primary_text" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_pressure"
-                android:textSize="@dimen/text_size_large" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherPressureVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1201"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="1201" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutHumidity"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layoutPressure"
-            app:layout_constraintTop_toBottomOf="@+id/layoutSunset">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/humidity"
-                android:tint="@color/primary_text" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_humidity"
-                android:textSize="@dimen/text_size_large" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherHumidityVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="48"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="48" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layoutVisibility"
-            android:layout_width="100dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/weather_field_bg"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/layoutHumidity"
-            app:layout_constraintTop_toBottomOf="@+id/layoutWind">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/visibility"
-                android:tint="@color/primary_text" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_condensed_light"
-                android:text="@string/weather_visibility"
-                android:textSize="@dimen/text_size_large" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherVisibilityVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 km"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                tools:text="10 km" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

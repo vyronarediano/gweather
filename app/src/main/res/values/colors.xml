@@ -35,4 +35,9 @@
     <color name="separator_color">#d8d8d8</color>
     <color name="row_item_activated_background">#DFDFDF</color>
 
+    <color name="weather_current_bg">#f4f4fc</color>
+    <color name="weather_current_icon">#b3b4c9</color>
+    <color name="weather_current_text">#b3b4c9</color>
+    <color name="weather_degree_c">#f6c511</color>
+
 </resources>

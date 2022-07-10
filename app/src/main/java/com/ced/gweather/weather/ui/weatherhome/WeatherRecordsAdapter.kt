@@ -68,7 +68,6 @@ class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsV
                 weatherRecordImgView?.apply {
                     Glide.with(context)
                         .load(imageUrl)
-                        .signature(ObjectKey(System.currentTimeMillis()))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .into(this)

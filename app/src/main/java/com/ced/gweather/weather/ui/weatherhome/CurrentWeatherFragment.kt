@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -12,8 +14,11 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.ced.commons.clean.interactor.Failure
+import com.ced.commons.ui.extensions.gone
 import com.ced.commons.ui.extensions.viewModel
+import com.ced.commons.ui.extensions.visible
 import com.ced.commons.ui.observe
+import com.ced.commons.util.DeviceManager
 import com.ced.commons.util.log.Logger
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
@@ -49,37 +54,58 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             observe(failure, ::handleFailure)
         }
 
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
+
+            currentWeatherViewModel.setIsAllowedToSave(false)
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (DeviceManager.hasLocationProviderEnabled(requireContext())) {
+                    getCurrentWeatherOfCurrentLoc()
+                } else {
+                    swipeRefreshLayout.isRefreshing = false
+
+                    showSnackBar(getString(R.string.unable_to_get_location))
+                }
+            }, 500)
+
+        }
+
         if (!checkPermissions()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions()
             }
         } else {
-            getLastLocation()
+            getCurrentWeatherOfCurrentLoc()
         }
     }
 
     private fun renderCurrentWeather(weather: WeatherModel?) {
+        lottieEmptyView.gone()
+        layoutCurrentWeather.visible()
+        swipeRefreshLayout.isRefreshing = false
+
         tvDegreeVal.text = weather?.main?.temp?.roundToInt().toString()
-        tvWeatherFeelsLike.text = "Feels like ${weather?.main?.feelsLike?.roundToInt().toString()}°".toUpperCase()
+        tvWeatherFeelsLike.text =
+            "Feels like ${weather?.main?.feelsLike?.roundToInt().toString()}°".toUpperCase()
         tvWeatherDesc.text = weather?.weather?.first()?.description?.capitalize()
 
         val sunrise = weather?.sys?.sunrise?.times(1000)
         tvWeatherSunriseVal.text =
-            SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunrise?.toLong() ?: 0))
+            SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date(sunrise?.toLong() ?: 0))
 
         val sunset = weather?.sys?.sunset?.times(1000)
         tvWeatherSunsetVal.text =
-            SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(sunset?.toLong() ?: 0))
+            SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date(sunset?.toLong() ?: 0))
 
         tvWeatherWindVal.text =
-            weather?.wind?.gust.toString().ifEmpty { weather?.wind?.speed?.toString() }
+            if (weather?.wind?.gust != null) weather.wind?.gust.toString() else weather?.wind?.speed?.toString()
         tvWeatherPressureVal.text = weather?.main?.pressure.toString()
         tvWeatherHumidityVal.text = weather?.main?.humidity.toString()
         tvWeatherVisibilityVal.text = "${weather?.visibility?.div(1000).toString()} km"
 
         Glide.with(requireActivity())
             .load("http://openweathermap.org/img/wn/" + weather?.weather?.first()?.icon + "@2x.png")
-            .signature(ObjectKey(System.currentTimeMillis()))
             .transition(DrawableTransitionOptions.withCrossFade())
             .format(DecodeFormat.PREFER_ARGB_8888)
             .into(ivWeatherIcon)
@@ -89,7 +115,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherCurrentLocation.text = currentLoc
     }
 
-    private fun getLastLocation() {
+    private fun getCurrentWeatherOfCurrentLoc() {
         fusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
 
             if (task.isSuccessful && task.result != null) {
@@ -99,9 +125,11 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
                 currentWeatherViewModel.getCurrentWeather()
             } else {
+                swipeRefreshLayout.isRefreshing = false
+
                 Logger.w(TAG, "getLastLocation:exception", task.exception)
 
-                showMessage("No location detected. Make sure location is enabled on the device.")
+                showMessage(getString(R.string.unable_to_get_location))
 
                 currentWeatherViewModel.currentLocCityCountry.value = "Manila, Philippines"
             }
@@ -147,6 +175,10 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             Logger.i(TAG, "Requesting permission")
             startLocationPermissionRequest()
         }
+
+        swipeRefreshLayout.isRefreshing = false
+        layoutCurrentWeather.gone()
+        lottieEmptyView.visible()
     }
 
     private fun handleFailure(failure: Failure?) {
