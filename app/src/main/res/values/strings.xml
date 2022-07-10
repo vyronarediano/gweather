@@ -48,5 +48,6 @@
     <string name="weather_pressure">Pressure</string>
     <string name="weather_humidity">Humidity</string>
     <string name="weather_visibility">Visibility</string>
+    <string name="weather_empty">Nothing to display here. Pull to refresh.</string>
 
 </resources>

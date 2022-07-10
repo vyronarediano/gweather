@@ -80,7 +80,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     }
 
     private fun renderCurrentWeather(weather: WeatherModel?) {
-        lottieEmptyView.gone()
+        layoutEmptyView.gone()
         layoutCurrentWeather.visible()
         swipeRefreshLayout.isRefreshing = false
 
@@ -138,6 +138,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
                 currentWeatherViewModel.getCurrentWeather()
             } else {
                 swipeRefreshLayout.isRefreshing = false
+                layoutCurrentWeather.gone()
+                layoutEmptyView.visible()
 
                 Logger.w(TAG, "getLastLocation:exception", task.exception)
 
@@ -190,7 +192,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
         swipeRefreshLayout.isRefreshing = false
         layoutCurrentWeather.gone()
-        lottieEmptyView.visible()
+        layoutEmptyView.visible()
     }
 
     private fun handleFailure(failure: Failure?) {
