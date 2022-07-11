@@ -33,12 +33,13 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progressBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin_triple"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -191,42 +192,38 @@
             android:id="@+id/layoutRegForm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvRegTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin_x4"
-                android:layout_marginTop="@dimen/activity_vertical_margin_x5"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin_x4"
-                android:fontFamily="@font/roboto_condensed_bold"
-                android:lines="2"
-                android:text="@string/reg_title"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_size_toolbar_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/layoutSignupContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_vertical_margin_x5"
+                android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegTitle">
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRegTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_x5"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin_triple"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:lines="2"
+                    android:text="@string/reg_title"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text_size_toolbar_title" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tfLayoutRegName"
                     style="@style/OutlinedTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
                     android:layout_marginTop="@dimen/activity_vertical_margin_triple"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                     android:hint="@string/reg_name_lbl"
                     app:endIconMode="clear_text">
 
@@ -247,9 +244,7 @@
                     style="@style/OutlinedTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
                     android:layout_marginTop="@dimen/activity_vertical_margin_half"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                     android:hint="@string/email_add_lbl"
                     app:endIconMode="clear_text">
 
@@ -270,9 +265,7 @@
                     style="@style/OutlinedTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
                     android:layout_marginTop="@dimen/activity_vertical_margin_half"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                     android:hint="@string/pass_add_lbl"
                     app:endIconMode="clear_text">
 
@@ -293,9 +286,7 @@
                     android:id="@+id/tvRegErrorMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                     android:fontFamily="@font/roboto_condensed_regular"
                     android:textAlignment="center"
                     android:textColor="@color/design_default_color_error"
@@ -307,9 +298,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="@dimen/activity_vertical_margin_x5"
                     android:layout_marginTop="@dimen/activity_vertical_margin_x4"
-                    android:layout_marginEnd="@dimen/activity_vertical_margin_x5"
                     android:fontFamily="@font/roboto_condensed_regular"
                     android:text="@string/reg_create_new_acc"
                     android:textSize="@dimen/text_size_large"
