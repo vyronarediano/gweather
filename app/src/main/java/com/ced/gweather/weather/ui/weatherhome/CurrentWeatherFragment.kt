@@ -26,7 +26,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.android.synthetic.main.weather_records_fragment.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -60,6 +59,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             swipeRefreshLayout.isRefreshing = true
 
             layoutCurrentWeather.gone()
+            layoutEmptyStateCurrentWeatherView.gone()
             showShimmerEffect(true)
 
             currentWeatherViewModel.setIsAllowedToSave(false)
@@ -69,6 +69,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
                     getCurrentWeatherOfCurrentLoc()
                 } else {
                     swipeRefreshLayout.isRefreshing = false
+                    layoutEmptyStateCurrentWeatherView.visible()
+                    showShimmerEffect(false)
 
                     showSnackBar(getString(R.string.unable_to_get_location))
                 }
@@ -92,7 +94,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     private fun renderCurrentWeather(weather: WeatherModel?) {
         showShimmerEffect(false)
 
-        layoutEmptyView.gone()
+        layoutEmptyStateCurrentWeatherView.gone()
         layoutCurrentWeather.visible()
         swipeRefreshLayout.isRefreshing = false
 
@@ -194,7 +196,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
                 swipeRefreshLayout.isRefreshing = false
                 layoutCurrentWeather.gone()
                 showShimmerEffect(false)
-                layoutEmptyView.visible()
+                layoutEmptyStateCurrentWeatherView.visible()
 
                 Logger.w(TAG, "getLastLocation:exception", task.exception)
 
@@ -258,7 +260,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         swipeRefreshLayout.isRefreshing = false
         layoutCurrentWeather.gone()
         showShimmerEffect(false)
-        layoutEmptyView.visible()
+        layoutEmptyStateCurrentWeatherView.visible()
     }
 
     private fun handleFailure(failure: Failure?) {

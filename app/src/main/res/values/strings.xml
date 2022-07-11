@@ -48,7 +48,8 @@
     <string name="weather_pressure">Pressure</string>
     <string name="weather_humidity">Humidity</string>
     <string name="weather_visibility">Visibility</string>
-    <string name="weather_empty">Nothing to display here. Pull to refresh.</string>
+    <string name="weather_unable_to_get_current_weather_text">Unable to get current weather. \n Pull to refresh.</string>
+    <string name="weather_empty_records_text">Nothing to display here. Pull to refresh.</string>
     <string name="weather_deg_symbol">\u2103</string>
 
 </resources>
