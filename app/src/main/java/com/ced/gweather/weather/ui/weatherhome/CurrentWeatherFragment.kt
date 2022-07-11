@@ -19,7 +19,7 @@ import com.ced.commons.ui.extensions.visible
 import com.ced.commons.ui.observe
 import com.ced.commons.util.DeviceManager
 import com.ced.commons.util.log.Logger
-import com.ced.commons.util.toDateTimeString
+import com.ced.commons.util.toTimeString
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
 import com.ced.gweather.weather.features.weatherhome.FailedToLoadCurrentWeather
@@ -90,10 +90,10 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherDesc.text = weather?.weather?.first()?.description?.capitalize()
 
         tvWeatherSunriseVal.text =
-            Date(weather?.sys?.sunrise?.toLong()?.times(1000) ?: 0).toDateTimeString()
+            Date(weather?.sys?.sunrise?.toLong()?.times(1000) ?: 0).toTimeString()
 
         tvWeatherSunsetVal.text =
-            Date(weather?.sys?.sunset?.toLong()?.times(1000) ?: 0).toDateTimeString()
+            Date(weather?.sys?.sunset?.toLong()?.times(1000) ?: 0).toTimeString()
 
         tvWeatherWindVal.text =
             if (weather?.wind?.gust != null) weather.wind?.gust.toString() else weather?.wind?.speed?.toString()

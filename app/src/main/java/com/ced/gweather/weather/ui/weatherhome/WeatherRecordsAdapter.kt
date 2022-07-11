@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.ced.commons.util.toDateTimeString
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.WeatherRecordsViewModel
@@ -63,7 +62,8 @@ class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsV
         }
 
         fun bind(weather: WeatherModel) {
-            val imageUrl = "http://openweathermap.org/img/wn/${weather.weather?.first()?.icon}@2x.png"
+            val imageUrl =
+                "http://openweathermap.org/img/wn/${weather.weather?.first()?.icon}@2x.png"
             parent.context.let { context ->
                 weatherRecordImgView?.apply {
                     Glide.with(context)
