@@ -38,6 +38,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
 
+    //region Overriden Methods
+
     override fun layoutId() = R.layout.current_weather_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +47,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
         appComponent.inject(this)
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         currentWeatherViewModel = viewModel(viewModelFactory) {
             observe(weather, ::renderCurrentWeather)
@@ -79,6 +81,10 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         }
     }
 
+    //endregion Overriden Methods
+
+    //region Private Methods
+
     private fun renderCurrentWeather(weather: WeatherModel?) {
         layoutEmptyView.gone()
         layoutCurrentWeather.visible()
@@ -101,11 +107,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherHumidityVal.text = weather?.main?.humidity.toString()
         tvWeatherVisibilityVal.text = "${weather?.visibility?.div(1000).toString()} km"
 
-        val isNight: Boolean
-        val cal = Calendar.getInstance()
-        val hour = cal[Calendar.HOUR_OF_DAY]
-        isNight = hour < 6 || hour > 18
-
+        val isNight: Boolean = isNight()
         if (isNight) {
             lottieMoonView.visible()
             lottieSunnyView.gone()
@@ -119,6 +121,15 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             .transition(DrawableTransitionOptions.withCrossFade())
             .format(DecodeFormat.PREFER_ARGB_8888)
             .into(ivWeatherIcon)
+    }
+
+    private fun isNight(): Boolean {
+        val isNight: Boolean
+        val cal = Calendar.getInstance()
+        val hour = cal[Calendar.HOUR_OF_DAY]
+        isNight = hour < 6 || hour > 18
+
+        return isNight
     }
 
     private fun renderCurrentLoc(currentLoc: String?) {
@@ -205,6 +216,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             else -> showFailureDialog()
         }
     }
+
+    //endregion Private Methods
 
     companion object {
 
