@@ -9,9 +9,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.ui.extensions.gone
 import com.ced.commons.ui.extensions.viewModel
@@ -107,29 +104,68 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherHumidityVal.text = weather?.main?.humidity.toString()
         tvWeatherVisibilityVal.text = "${weather?.visibility?.div(1000).toString()} km"
 
+        val weatherIconStr = weather?.weather?.first()?.icon.orEmpty()
+        setupWeatherIcons(weatherIconStr)
+
+        tvWeatherGreeting.text = getGreetingMessage()
+    }
+
+    private fun setupWeatherIcons(weatherIconStr: String) {
         val isNight: Boolean = isNight()
         if (isNight) {
-            lottieMoonView.visible()
-            lottieSunnyView.gone()
+            if (weatherIconStr.contains("01n")) {
+                lottieNightClearSkyView.visible()
+            } else if (weatherIconStr.contains("04n")
+                || weatherIconStr.contains("03n")
+                || weatherIconStr.contains("02n")
+            ) {
+                lottieMoonView.visible()
+            } else if (weatherIconStr.contains("09n")
+                || weatherIconStr.contains("10n")
+            ) {
+                lottieRainyNightView.visible()
+            } else if (weatherIconStr.contains("11n")) {
+                lottieRainyNighThunderstormView.visible()
+            } else {
+                lottieMoonView.visible()
+            }
         } else {
-            lottieMoonView.gone()
-            lottieSunnyView.visible()
+            if (weatherIconStr.contains("01d")) {
+                lottieSunnyView.visible()
+            } else if (weatherIconStr.contains("02d")
+                || weatherIconStr.contains("03d")
+                || weatherIconStr.contains("04d")
+            ) {
+                lottieSunnyFewCloudsView.visible()
+            } else if (weatherIconStr.contains("09d")
+                || weatherIconStr.contains("10d")
+            ) {
+                lottieSunnyRainingView.visible()
+            } else if (weatherIconStr.contains("11d")) {
+                lottieDayThunderstormView.visible()
+            } else {
+                lottieMoonView.visible()
+            }
         }
-
-        Glide.with(requireActivity())
-            .load("http://openweathermap.org/img/wn/" + weather?.weather?.first()?.icon + "@2x.png")
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .format(DecodeFormat.PREFER_ARGB_8888)
-            .into(ivWeatherIcon)
     }
 
     private fun isNight(): Boolean {
         val isNight: Boolean
         val cal = Calendar.getInstance()
         val hour = cal[Calendar.HOUR_OF_DAY]
-        isNight = hour < 6 || hour > 18
+        isNight = hour in 18..24
 
         return isNight
+    }
+
+    private fun getGreetingMessage(): String {
+        val c = Calendar.getInstance()
+        return when (c.get(Calendar.HOUR_OF_DAY)) {
+            in 0..11 -> "Good Morning"
+            in 12..18 -> "Good Afternoon"
+            in 19..24 -> "Good Evening"
+            else -> "Hello"
+        }
     }
 
     private fun renderCurrentLoc(currentLoc: String?) {

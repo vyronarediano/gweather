@@ -49,5 +49,6 @@
     <string name="weather_humidity">Humidity</string>
     <string name="weather_visibility">Visibility</string>
     <string name="weather_empty">Nothing to display here. Pull to refresh.</string>
+    <string name="weather_deg_symbol">\u2103</string>
 
 </resources>

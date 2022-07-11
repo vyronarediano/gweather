@@ -40,6 +40,8 @@
     <dimen name="nav_header_height">176dp</dimen>
 
     <!-- Current Weather -->
+    <dimen name="weather_deg">40sp</dimen>
     <dimen name="weather_field_width">100dp</dimen>
     <dimen name="weather_field_height">90dp</dimen>
+    <dimen name="weather_icon_vertical_margin_top">16dp</dimen>
 </resources>

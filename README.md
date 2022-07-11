@@ -9,11 +9,12 @@ A beautiful and minimal weather app illustrating Android development best practi
 
 ## Features
 
-- Modular Android app architecture
-- MVVM + Clean
-- Secure Authentication & Login/Registration using Cloud Firestore
-- Current Weather Data
-- List of Weather fetched
+- Modular Android App Architecture
+- MVVM + Clean Architecture
+- Secure Authentication by Google Authentication
+- Login/Registration & Cloud Storage by Google Cloud Firestore
+- Displays Current Weather Data
+- Weather Records (Fetched data and stored in DB when user opens the app only)
 
 
 ## Tech Stack
@@ -26,7 +27,9 @@ A beautiful and minimal weather app illustrating Android development best practi
 
 **API:** Retrofit
 
-**Database & Authentication:** Google Firebase Firestore
+**Database:** Google Firebase Firestore
+
+**Authentication:** Google Authentication
 
 **Others:** Android Jetpack, RxJava, RxKotlin, Espresso, LiveData
 
