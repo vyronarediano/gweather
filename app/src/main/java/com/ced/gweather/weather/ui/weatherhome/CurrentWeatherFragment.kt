@@ -19,6 +19,7 @@ import com.ced.commons.ui.extensions.visible
 import com.ced.commons.ui.observe
 import com.ced.commons.util.DeviceManager
 import com.ced.commons.util.log.Logger
+import com.ced.commons.util.toDateTimeString
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
 import com.ced.gweather.weather.features.weatherhome.FailedToLoadCurrentWeather
@@ -28,7 +29,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.current_weather_fragment.*
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -89,13 +89,11 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             "Feels like ${weather?.main?.feelsLike?.roundToInt().toString()}°".toUpperCase()
         tvWeatherDesc.text = weather?.weather?.first()?.description?.capitalize()
 
-        val sunrise = weather?.sys?.sunrise?.times(1000)
         tvWeatherSunriseVal.text =
-            SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date(sunrise?.toLong() ?: 0))
+            Date(weather?.sys?.sunrise?.toLong()?.times(1000) ?: 0).toDateTimeString()
 
-        val sunset = weather?.sys?.sunset?.times(1000)
         tvWeatherSunsetVal.text =
-            SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date(sunset?.toLong() ?: 0))
+            Date(weather?.sys?.sunset?.toLong()?.times(1000) ?: 0).toDateTimeString()
 
         tvWeatherWindVal.text =
             if (weather?.wind?.gust != null) weather.wind?.gust.toString() else weather?.wind?.speed?.toString()
