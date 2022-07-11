@@ -26,6 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.current_weather_fragment.*
+import kotlinx.android.synthetic.main.weather_records_fragment.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -52,8 +53,14 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             observe(failure, ::handleFailure)
         }
 
+        layoutCurrentWeather.gone()
+        showShimmerEffect(true)
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
+
+            layoutCurrentWeather.gone()
+            showShimmerEffect(true)
 
             currentWeatherViewModel.setIsAllowedToSave(false)
 
@@ -83,6 +90,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     //region Private Methods
 
     private fun renderCurrentWeather(weather: WeatherModel?) {
+        showShimmerEffect(false)
+
         layoutEmptyView.gone()
         layoutCurrentWeather.visible()
         swipeRefreshLayout.isRefreshing = false
@@ -184,6 +193,7 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             } else {
                 swipeRefreshLayout.isRefreshing = false
                 layoutCurrentWeather.gone()
+                showShimmerEffect(false)
                 layoutEmptyView.visible()
 
                 Logger.w(TAG, "getLastLocation:exception", task.exception)
@@ -192,6 +202,16 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
                 currentWeatherViewModel.currentLocCityCountry.value = "Manila, Philippines"
             }
+        }
+    }
+
+    private fun showShimmerEffect(show: Boolean) {
+        if (show) {
+            layoutShimmerCurrentWeather.startShimmer()
+            layoutShimmerCurrentWeather.visible()
+        } else {
+            layoutShimmerCurrentWeather.stopShimmer()
+            layoutShimmerCurrentWeather.gone()
         }
     }
 
@@ -237,10 +257,13 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
         swipeRefreshLayout.isRefreshing = false
         layoutCurrentWeather.gone()
+        showShimmerEffect(false)
         layoutEmptyView.visible()
     }
 
     private fun handleFailure(failure: Failure?) {
+        showShimmerEffect(false)
+
         when (failure) {
             is FailedToLoadCurrentWeather -> {
                 Snackbar.make(

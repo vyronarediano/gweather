@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     android:background="@color/weather_current_bg">
 
+    <!-- region LOADING STATE: Skeleton with shimmer effect by Facebook -->
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/layoutShimmerCurrentWeather"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/data_placeholder_current_weather_layout" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <!-- endregion LOADING STATE -->
+
+    <!-- region EMPTY STATE -->
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layoutEmptyView"
         android:layout_width="wrap_content"
@@ -37,6 +57,8 @@
             android:textSize="@dimen/text_size_large" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- endregion EMPTY STATE -->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -122,7 +144,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/layoutDegree"
                         android:layout_width="wrap_content"
-                        android:layout_height="150dp"
+                        android:layout_height="160dp"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

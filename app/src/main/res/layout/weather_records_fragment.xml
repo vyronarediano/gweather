@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/weather_current_bg">
 
-    <!-- region LOADING STATE: Skeleton with shimmer effect by facebook -->
+    <!-- region LOADING STATE: Skeleton with shimmer effect by Facebook -->
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/layoutShimmerWeatherRecords"
@@ -24,19 +24,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
-            <include layout="@layout/data_placeholder_layout" />
+            <include layout="@layout/data_placeholder_weather_records_layout" />
 
         </LinearLayout>
 
