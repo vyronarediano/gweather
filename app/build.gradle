@@ -107,6 +107,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:${versions.androidXNav}"
     implementation "androidx.recyclerview:recyclerview:${versions.androidXRecyclerView}"
     implementation "androidx.recyclerview:recyclerview-selection:${versions.androidXRecyclerSelection}"
+
+    implementation "com.facebook.shimmer:shimmer:${versions.fbShimmer}"
     implementation "com.airbnb.android:lottie:${versions.lottie}"
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     implementation "com.google.android.material:material:${versions.material}"

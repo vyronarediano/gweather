@@ -44,4 +44,9 @@
     <dimen name="weather_field_width">100dp</dimen>
     <dimen name="weather_field_height">90dp</dimen>
     <dimen name="weather_icon_vertical_margin_top">16dp</dimen>
+
+    <!-- FB Shimmer Skeletal Loading -->
+    <dimen name="placeholder_image">50dp</dimen>
+    <dimen name="placeholder_text_height">15dp</dimen>
+    <dimen name="placeholder_shape_radius">5dp</dimen>
 </resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_list_item_height"
+    android:layout_marginTop="@dimen/card_list_item_margin"
+    android:layout_marginBottom="@dimen/card_list_item_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/viewDataPlaceholderImage"
+            android:layout_width="@dimen/placeholder_image"
+            android:layout_height="@dimen/placeholder_image"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="@dimen/placeholder_shape_radius"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintDatePlaceholderProductTextLabels"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintDatePlaceholderProductTextLabels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin_x4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/viewDataPlaceholderImage"
+            app:layout_constraintStart_toEndOf="@id/viewDataPlaceholderImage"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvDatePlaceholder"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/placeholder_text_height"
+                app:cardBackgroundColor="@color/placeholder_background"
+                app:cardCornerRadius="@dimen/placeholder_shape_radius"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/txtViewProductRemainingStock"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/placeholder_text_height"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/placeholder_background"
+                app:cardCornerRadius="@dimen/placeholder_shape_radius"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/cvDatePlaceholder"
+                app:layout_constraintTop_toBottomOf="@+id/cvDatePlaceholder" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
