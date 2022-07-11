@@ -55,8 +55,8 @@ class AuthenticateViewModel
     }
 
     fun isRegFormValid(): Boolean {
-        return regEmail.value?.isNotEmpty() == true && regPass.value?.isNotEmpty() == true
-                && regName.value?.isNotEmpty() == true
+        return !regEmail.value.isNullOrEmpty() && !regPass.value.isNullOrEmpty()
+                && !regName.value.isNullOrEmpty()
     }
 
     fun login() {
@@ -147,8 +147,8 @@ class AuthenticateViewModel
     }
 
     enum class AuthenticationState {
-        UNAUTHENTICATED,        // Initial state, the user needs to authenticate
-        AUTHENTICATED,        // The user has authenticated successfully
+        UNAUTHENTICATED,         // Initial state, the user needs to authenticate
+        AUTHENTICATED,           // The user has authenticated successfully
         INVALID_AUTHENTICATION,  // Authentication failed
     }
 
