@@ -122,6 +122,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     }
 
     private fun setupWeatherIcons(weatherIconStr: String) {
+        hideAllLottie()
+
         val isNight: Boolean = isNight()
         if (isNight) {
             if (weatherIconStr.contains("01n")) {
@@ -158,6 +160,18 @@ class CurrentWeatherFragment : BaseFragmentDI() {
                 lottieMoonView.visible()
             }
         }
+    }
+
+    private fun hideAllLottie() {
+        lottieNightClearSkyView.gone()
+        lottieMoonView.gone()
+        lottieRainyNightView.gone()
+        lottieRainyNighThunderstormView.gone()
+        lottieMoonView.gone()
+        lottieSunnyView.gone()
+        lottieSunnyFewCloudsView.gone()
+        lottieSunnyRainingView.gone()
+        lottieDayThunderstormView.gone()
     }
 
     private fun isNight(): Boolean {

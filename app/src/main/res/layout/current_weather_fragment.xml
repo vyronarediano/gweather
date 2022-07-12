@@ -222,7 +222,7 @@
                     android:layout_marginTop="@dimen/weather_icon_vertical_margin_top"
                     android:visibility="gone"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="14444-sunny.json"
+                    app:lottie_fileName="sunny.json"
                     app:lottie_loop="true" />
 
                 <com.airbnb.lottie.LottieAnimationView
