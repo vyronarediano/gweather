@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -74,11 +75,11 @@ class LoginFragment : BaseFragmentDI() {
         }
 
         btnGoToSignupView.setOnClickListener {
-            showRegForm(true)
+            authenticateViewModel.showSignupSection.value = true
         }
 
         btnGoToLoginView.setOnClickListener {
-            showRegForm(false)
+            authenticateViewModel.showSignupSection.value = false
         }
     }
 
@@ -205,16 +206,28 @@ class LoginFragment : BaseFragmentDI() {
     }
 
     private fun showRegForm(show: Boolean?) {
+        val slideInRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
+        val slideOutLeft = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_left)
+
+        val slideInLeft = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+        val slideOutRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_out_right)
+
         if (show == true) {
-            layoutRegForm.visible()
-            clearAllLoginFields()
-
+            layoutLoginForm.startAnimation(slideOutLeft)
             layoutLoginForm.gone()
-        } else {
-            layoutRegForm.gone()
-            clearAllRegFields()
 
+            layoutRegForm.startAnimation(slideInRight)
+            layoutRegForm.visible()
+
+            clearAllLoginFields()
+        } else {
+            layoutRegForm.startAnimation(slideOutRight)
+            layoutRegForm.gone()
+
+            layoutLoginForm.startAnimation(slideInLeft)
             layoutLoginForm.visible()
+
+            clearAllRegFields()
         }
         toggleProgressBarVisibility(false)
 
@@ -228,7 +241,11 @@ class LoginFragment : BaseFragmentDI() {
             hideKeyboard()
             clearAllRegFields()
 
-            Toast.makeText(requireContext(), R.string.login_create_account_success, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                R.string.login_create_account_success,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
