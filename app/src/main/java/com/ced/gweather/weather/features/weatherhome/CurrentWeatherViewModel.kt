@@ -52,6 +52,12 @@ class CurrentWeatherViewModel
                     }
                 }
             }
+
+            override fun onError(throwable: Throwable) {
+                Logger.d(TAG, "Get current weather failed: ${throwable.message}", throwable)
+
+                handleFailure(FailedToLoadCurrentWeather(throwable))
+            }
         }, params = currentLocCityCountry.value)
     }
 

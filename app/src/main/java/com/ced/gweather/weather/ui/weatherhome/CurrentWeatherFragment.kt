@@ -279,12 +279,14 @@ class CurrentWeatherFragment : BaseFragmentDI() {
 
     private fun handleFailure(failure: Failure?) {
         showShimmerEffect(false)
+        swipeRefreshLayout.isRefreshing = false
+        layoutEmptyStateCurrentWeatherView.visible()
 
         when (failure) {
             is FailedToLoadCurrentWeather -> {
                 Snackbar.make(
                     requireView(),
-                    resources.getString(R.string.unable_to_load_weather_records),
+                    resources.getString(R.string.unable_to_get_current_weather),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
