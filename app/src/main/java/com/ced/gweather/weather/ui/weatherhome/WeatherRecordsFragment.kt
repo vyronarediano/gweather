@@ -1,8 +1,6 @@
 package com.ced.gweather.weather.ui.weatherhome
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ced.commons.clean.interactor.Failure
@@ -32,6 +30,7 @@ class WeatherRecordsFragment : BaseFragmentDI() {
 
         weatherRecordsViewModel = viewModel(viewModelFactory) {
             observe(weatherRecords, ::renderWeatherRecords)
+            observe(showLoadingState, ::showLoading)
             observe(failure, ::handleFailure)
         }
 
@@ -46,40 +45,38 @@ class WeatherRecordsFragment : BaseFragmentDI() {
             adapter = weatherRecordsAdapter
         }
 
-        weatherRecordsViewModel.loadWeatherRecords()
-
-        showShimmerEffect(true)
-
         swipeRefreshLayoutWeatherRecords.setOnRefreshListener {
             swipeRefreshLayoutWeatherRecords.isRefreshing = true
-            showShimmerEffect(true)
-            rvWeatherRecords.gone()
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                weatherRecordsViewModel.loadWeatherRecords()
-            }, 500)
+            weatherRecordsViewModel.loadWeatherRecords()
         }
+
+        weatherRecordsViewModel.loadWeatherRecords()
     }
 
     private fun renderWeatherRecords(weatherRecords: List<WeatherModel>?) {
         swipeRefreshLayoutWeatherRecords.isRefreshing = false
+
         if (weatherRecords?.size != 0) {
-            showShimmerEffect(false)
             layoutEmptyStateWeatherRecordsView.gone()
 
-            rvWeatherRecords.visible()
             weatherRecords?.let { weatherRecordsAdapter.setWeatherRecords(it) }
         } else {
-            showShimmerEffect(false)
-            rvWeatherRecords.gone()
-
             layoutEmptyStateWeatherRecordsView.visible()
         }
     }
 
-    private fun handleFailure(failure: Failure?) {
-        showShimmerEffect(false)
+    private fun showLoading(show: Boolean?) {
+        if (show == true) {
+            layoutShimmerWeatherRecords.startShimmer()
+            layoutShimmerWeatherRecords.visible()
+        } else {
+            layoutShimmerWeatherRecords.stopShimmer()
+            layoutShimmerWeatherRecords.gone()
+        }
+    }
 
+    private fun handleFailure(failure: Failure?) {
         when (failure) {
             is FailedToLoadWeatherRecords -> {
                 Snackbar.make(
@@ -89,16 +86,6 @@ class WeatherRecordsFragment : BaseFragmentDI() {
                 ).show()
             }
             else -> showFailureDialog()
-        }
-    }
-
-    private fun showShimmerEffect(show: Boolean) {
-        if (show) {
-            layoutShimmerWeatherRecords.startShimmer()
-            layoutShimmerWeatherRecords.visible()
-        } else {
-            layoutShimmerWeatherRecords.stopShimmer()
-            layoutShimmerWeatherRecords.gone()
         }
     }
 

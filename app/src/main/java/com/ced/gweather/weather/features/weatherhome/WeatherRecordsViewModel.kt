@@ -16,6 +16,8 @@ class WeatherRecordsViewModel
 
     var weatherRecords: MutableLiveData<List<WeatherModel>> = MutableLiveData()
 
+    var showLoadingState = MutableLiveData(false)
+
     init {
         addUseCases {
             add(getWeatherRecordsUseCase)
@@ -25,13 +27,19 @@ class WeatherRecordsViewModel
     fun loadWeatherRecords() {
         Logger.d(TAG, "Loading weather records...")
 
+        showLoadingState.value = true
+
         getWeatherRecordsUseCase.execute(object : EmptyObserver<List<WeatherModel>>() {
             override fun onNext(t: List<WeatherModel>) {
                 weatherRecords.value = t
+
+                showLoadingState.value = false
             }
 
             override fun onError(e: Throwable) {
                 Logger.d(TAG, "Weather records loading failed: ${e.message}", e)
+
+                showLoadingState.value = false
 
                 handleFailure(Failure.ServerError)
             }
