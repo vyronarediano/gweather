@@ -2,11 +2,13 @@ package com.ced.gweather.weather.features.weatherhome
 
 import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.clean.interactor.InvalidArgumentException
+import com.ced.gweather.weather.ui.UiText
 
-abstract class WeatherUseCaseFailure(var feature: String, throwable: Throwable) :
+abstract class WeatherUseCaseFailure(throwable: Throwable, var error: UiText? = null) :
     Failure.FeatureFailure() {
 
-    var message: String = "Sorry, we encountered an error performing the action."
+    var message: String = throwable.message.toString()
+        .ifEmpty { "Sorry, we encountered an error performing the action." }
 
     init {
         if (throwable is InvalidArgumentException) message =
@@ -15,10 +17,13 @@ abstract class WeatherUseCaseFailure(var feature: String, throwable: Throwable) 
 
 }
 
-class FailedToLoadCurrentWeather(throwable: Throwable) :
-    WeatherUseCaseFailure("Load Current Weather Failed", throwable)
+class FailedToLoadCurrentWeather(errorMsgStrResource: UiText, throwable: Throwable) :
+    WeatherUseCaseFailure(throwable, errorMsgStrResource)
 
-class FailedToLoadWeatherRecords(throwable: Throwable) :
-    WeatherUseCaseFailure("Weather Records Load Failed", throwable)
+class FailedToAddWeatherRecord(errorMsgStrResource: UiText, throwable: Throwable) :
+    WeatherUseCaseFailure(throwable, errorMsgStrResource)
+
+class FailedToLoadWeatherRecords(errorMsgStrResource: UiText, throwable: Throwable) :
+    WeatherUseCaseFailure(throwable, errorMsgStrResource)
 
 

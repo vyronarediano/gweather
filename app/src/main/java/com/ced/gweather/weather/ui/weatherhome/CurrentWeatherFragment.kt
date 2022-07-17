@@ -22,6 +22,7 @@ import com.ced.commons.util.log.Logger
 import com.ced.commons.util.toTimeString
 import com.ced.gweather.R
 import com.ced.gweather.weather.features.weatherhome.CurrentWeatherViewModel
+import com.ced.gweather.weather.features.weatherhome.FailedToAddWeatherRecord
 import com.ced.gweather.weather.features.weatherhome.FailedToLoadCurrentWeather
 import com.ced.gweather.weather.ui.BaseFragmentDI
 import com.ced.gweather_core.domain.model.WeatherModel
@@ -309,7 +310,14 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             is FailedToLoadCurrentWeather -> {
                 Snackbar.make(
                     requireView(),
-                    resources.getString(R.string.unable_to_get_current_weather),
+                    failure.error?.asString(requireContext()).orEmpty(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            is FailedToAddWeatherRecord -> {
+                Snackbar.make(
+                    requireView(),
+                    failure.error?.asString(requireContext()).orEmpty(),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }

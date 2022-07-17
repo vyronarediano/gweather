@@ -28,7 +28,8 @@
     <string name="online_required">You need to be online to perform action.</string>
 
     <string name="unable_to_get_current_weather">Unable to get the current weather. Check your API key or internet connection and try again.</string>
-    <string name="unable_to_load_weather_records">Unable to get the weather records. Check your internet connection and try again</string>
+    <string name="unable_to_load_weather_records">Unable to get the weather records. Check your internet connection and try again.</string>
+    <string name="unable_to_add_weather_record">Unable to add weather record. Check your internet connection and try again</string>
     <string name="unable_to_get_location"> No location detected. Make sure location is enabled on the device.</string>
 
     <string name="nav_header_desc">Navigation header</string>

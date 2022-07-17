@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.ced.authentication.domain.repository.SessionRepository
 import com.ced.commons.clean.rx.EmptySingleObserver
 import com.ced.commons.util.log.Logger
+import com.ced.gweather.R
+import com.ced.gweather.weather.ui.UiText
 import com.ced.gweather_core.domain.interactor.AddWeatherRecordUseCase
 import com.ced.gweather_core.domain.interactor.GetCurrentWeatherUseCase
 import com.ced.gweather_core.domain.model.WeatherModel
@@ -63,7 +65,12 @@ class CurrentWeatherViewModel
                     showLoadingState.value = false
                     showEmptyState.value = true
 
-                    handleFailure(FailedToLoadCurrentWeather(throwable))
+                    handleFailure(
+                        FailedToLoadCurrentWeather(
+                            UiText.StringResource(restId = R.string.unable_to_get_current_weather),
+                            throwable
+                        )
+                    )
                 }
 
                 /**
@@ -79,6 +86,20 @@ class CurrentWeatherViewModel
                                 EmptySingleObserver<WeatherModel>() {
                                 override fun onSuccess(result: WeatherModel) {
                                     Logger.i(TAG, "Added new weather record.")
+                                }
+
+                                override fun onError(throwable: Throwable) {
+                                    Logger.e(
+                                        TAG,
+                                        "Error encountered while adding weather record: $throwable"
+                                    )
+
+                                    handleFailure(
+                                        FailedToAddWeatherRecord(
+                                            UiText.StringResource(restId = R.string.unable_to_add_weather_record),
+                                            throwable
+                                        )
+                                    )
                                 }
                             })
                         }

@@ -81,7 +81,7 @@ class WeatherRecordsFragment : BaseFragmentDI() {
             is FailedToLoadWeatherRecords -> {
                 Snackbar.make(
                     requireView(),
-                    resources.getString(R.string.unable_to_load_weather_records),
+                    failure.error?.asString(requireContext()).orEmpty(),
                     Snackbar.LENGTH_SHORT
                 ).show()
             }

@@ -1,9 +1,10 @@
 package com.ced.gweather.weather.features.weatherhome
 
 import androidx.lifecycle.MutableLiveData
-import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.clean.rx.EmptyObserver
 import com.ced.commons.util.log.Logger
+import com.ced.gweather.R
+import com.ced.gweather.weather.ui.UiText
 import com.ced.gweather_core.domain.interactor.GetWeatherRecordsUseCase
 import com.ced.gweather_core.domain.model.WeatherModel
 import com.ced.gweather_core.internal.viewmodel.BaseViewModel
@@ -41,11 +42,15 @@ class WeatherRecordsViewModel
 
                 showLoadingState.value = false
 
-                handleFailure(Failure.ServerError)
+                handleFailure(
+                    FailedToLoadWeatherRecords(
+                        UiText.StringResource(restId = R.string.unable_to_load_weather_records),
+                        e
+                    )
+                )
             }
         })
     }
-
 
     companion object {
         private val TAG = WeatherRecordsViewModel::class.java.simpleName
