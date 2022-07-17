@@ -1,7 +1,10 @@
 package com.ced.gweather.weather.ui.weatherhome
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -26,9 +29,14 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.current_weather_fragment.*
+import java.io.IOException
 import java.util.*
 import kotlin.math.roundToInt
 
+/**
+ * @author Cedierick Vyron Arediano
+ * @since 1.0.0
+ */
 class CurrentWeatherFragment : BaseFragmentDI() {
 
     private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
@@ -49,41 +57,37 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         currentWeatherViewModel = viewModel(viewModelFactory) {
             observe(weather, ::renderCurrentWeather)
             observe(currentLocCityCountry, ::renderCurrentLoc)
+            observe(showLoadingState, ::showLoadingState)
+            observe(showRefreshLayout, ::showRefreshLayout)
+            observe(showContentLayout, ::showContentLayout)
+            observe(showEmptyState, ::showEmptyState)
             observe(failure, ::handleFailure)
         }
 
-        layoutCurrentWeather.gone()
-        showShimmerEffect(true)
-
         swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = true
-
-            layoutCurrentWeather.gone()
-            layoutEmptyStateCurrentWeatherView.gone()
-            showShimmerEffect(true)
+            currentWeatherViewModel.showRefreshLayout.value = true
 
             currentWeatherViewModel.setIsAllowedToSave(false)
 
             Handler(Looper.getMainLooper()).postDelayed({
                 if (DeviceManager.hasLocationProviderEnabled(requireContext())) {
-                    getCurrentWeatherOfCurrentLoc()
+                    getWeatherFromLoc()
                 } else {
-                    swipeRefreshLayout.isRefreshing = false
-                    layoutEmptyStateCurrentWeatherView.visible()
-                    showShimmerEffect(false)
+                    currentWeatherViewModel.showRefreshLayout.value = false
+                    currentWeatherViewModel.showLoadingState.value = false
+                    currentWeatherViewModel.showEmptyState.value = true
 
                     showSnackBar(getString(R.string.unable_to_get_location))
                 }
-            }, 500)
-
+            }, 200)
         }
 
-        if (!checkPermissions()) {
+        if (!hasGrantedPermissions()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions()
             }
         } else {
-            getCurrentWeatherOfCurrentLoc()
+            getWeatherFromLoc()
         }
     }
 
@@ -92,12 +96,6 @@ class CurrentWeatherFragment : BaseFragmentDI() {
     //region Private Methods
 
     private fun renderCurrentWeather(weather: WeatherModel?) {
-        showShimmerEffect(false)
-
-        layoutEmptyStateCurrentWeatherView.gone()
-        layoutCurrentWeather.visible()
-        swipeRefreshLayout.isRefreshing = false
-
         tvDegreeVal.text = weather?.main?.temp?.roundToInt().toString()
         tvWeatherFeelsLike.text =
             "Feels like ${weather?.main?.feelsLike?.roundToInt().toString()}°".toUpperCase()
@@ -197,32 +195,8 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         tvWeatherCurrentLocation.text = currentLoc
     }
 
-    private fun getCurrentWeatherOfCurrentLoc() {
-        fusedLocationClient?.lastLocation?.addOnCompleteListener(requireActivity()) { task ->
-
-            if (task.isSuccessful && task.result != null) {
-                val lat = task.result.latitude
-                val long = task.result.longitude
-                currentWeatherViewModel.getAddressFromLocation(lat, long, requireContext())
-
-                currentWeatherViewModel.getCurrentWeather()
-            } else {
-                swipeRefreshLayout.isRefreshing = false
-                layoutCurrentWeather.gone()
-                showShimmerEffect(false)
-                layoutEmptyStateCurrentWeatherView.visible()
-
-                Logger.w(TAG, "getLastLocation:exception", task.exception)
-
-                showMessage(getString(R.string.unable_to_get_location))
-
-                currentWeatherViewModel.currentLocCityCountry.value = "Manila, Philippines"
-            }
-        }
-    }
-
-    private fun showShimmerEffect(show: Boolean) {
-        if (show) {
+    private fun showLoadingState(show: Boolean?) {
+        if (show == true) {
             layoutShimmerCurrentWeather.startShimmer()
             layoutShimmerCurrentWeather.visible()
         } else {
@@ -231,13 +205,66 @@ class CurrentWeatherFragment : BaseFragmentDI() {
         }
     }
 
+    private fun showRefreshLayout(show: Boolean?) {
+        swipeRefreshLayout.isRefreshing = show == true
+    }
+
+    private fun showContentLayout(show: Boolean?) {
+        if (show == true) layoutCurrentWeather.visible() else layoutCurrentWeather.gone()
+    }
+
+    private fun showEmptyState(show: Boolean?) {
+        if (show == true) layoutEmptyStateWeather.visible() else layoutEmptyStateWeather.gone()
+    }
+
+    private fun getWeatherFromLoc() {
+        fusedLocationClient?.lastLocation
+            ?.addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful && task.result != null) {
+                    val lat = task.result.latitude
+                    val long = task.result.longitude
+                    getAddressFromLocation(lat, long, requireContext())
+
+                    currentWeatherViewModel.getCurrentWeather()
+                }
+            }
+            ?.addOnFailureListener {
+                Logger.e(TAG, "Error encountered on getting location:", it)
+
+                currentWeatherViewModel.showContentLayout.value = false
+                currentWeatherViewModel.showRefreshLayout.value = false
+                currentWeatherViewModel.showLoadingState.value = false
+                currentWeatherViewModel.showEmptyState.value = true
+
+                showMessage(getString(R.string.unable_to_get_location))
+
+                currentWeatherViewModel.currentLocCityCountry.value = "Manila, Philippines"
+            }
+    }
+
+    private fun getAddressFromLocation(lat: Double, lng: Double, context: Context): List<Address> {
+        var addressList: List<Address> = ArrayList()
+        try {
+            val geocoder = Geocoder(context)
+            addressList = geocoder.getFromLocation(lat, lng, 3)
+
+            currentWeatherViewModel.currentLocCityCountry.value =
+                "${addressList.first().locality}, ${addressList.first().countryName}"
+        } catch (e: IOException) {
+
+            Logger.e(TAG, e.message ?: "Unable to determine address from location:", e)
+        }
+
+        return addressList
+    }
+
     private fun showMessage(string: String) {
         Toast.makeText(context, string, Toast.LENGTH_LONG).show()
     }
 
-    private fun checkPermissions(): Boolean {
+    private fun hasGrantedPermissions(): Boolean {
         val permissionState = ActivityCompat.checkSelfPermission(
-            context!!,
+            requireContext(),
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
         return permissionState == PackageManager.PERMISSION_GRANTED
@@ -271,17 +298,13 @@ class CurrentWeatherFragment : BaseFragmentDI() {
             startLocationPermissionRequest()
         }
 
-        swipeRefreshLayout.isRefreshing = false
-        layoutCurrentWeather.gone()
-        showShimmerEffect(false)
-        layoutEmptyStateCurrentWeatherView.visible()
+        currentWeatherViewModel.showRefreshLayout.value = false
+        currentWeatherViewModel.showLoadingState.value = false
+        currentWeatherViewModel.showContentLayout.value = false
+        currentWeatherViewModel.showEmptyState.value = true
     }
 
     private fun handleFailure(failure: Failure?) {
-        showShimmerEffect(false)
-        swipeRefreshLayout.isRefreshing = false
-        layoutEmptyStateCurrentWeatherView.visible()
-
         when (failure) {
             is FailedToLoadCurrentWeather -> {
                 Snackbar.make(

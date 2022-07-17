@@ -53,7 +53,7 @@ abstract class SingleUseCase<Results, in Params>(
      * by [buildUseCaseSingle] method.
      * @param params Parameters (Optional) used to build/execute this use case.
      */
-    fun execute(observer: DisposableSingleObserver<Results> = EmptySingleObserver(), params: Params? = null) {
+    fun execute(params: Params? = null, observer: DisposableSingleObserver<Results> = EmptySingleObserver()) {
         val single = buildUseCaseSingleWithSchedulers(params)
         addDisposable(single.subscribeWith(observer))
     }

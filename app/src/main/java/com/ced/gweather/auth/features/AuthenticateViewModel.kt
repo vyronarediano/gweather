@@ -7,6 +7,7 @@ import com.ced.authentication.domain.model.User
 import com.ced.commons.clean.interactor.Failure
 import com.ced.commons.clean.rx.EmptySingleObserver
 import com.ced.commons.util.log.Logger
+import com.ced.gweather.BuildConfig
 import com.ced.gweather_core.internal.viewmodel.BaseViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -108,15 +109,14 @@ class AuthenticateViewModel
                         name = regName.value
                         dateCreated = Calendar.getInstance().time
 
-                        registerUserUseCase.execute(
+                        registerUserUseCase.execute(params = this,
                             object : EmptySingleObserver<User>() {
                                 override fun onSuccess(result: User) {
                                     isCreatingUserFinished.value = true
 
                                     showSignupSection.value = false
                                 }
-                            }, this
-                        )
+                            })
                     }
                 } else {
                     authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
@@ -128,7 +128,7 @@ class AuthenticateViewModel
     }
 
     private fun loginToGWeather(email: String) {
-        getUserUseCase.execute(object : EmptySingleObserver<User>() {
+        getUserUseCase.execute(params = email, object : EmptySingleObserver<User>() {
             override fun onSuccess(result: User) {
                 user = result
 
@@ -143,7 +143,7 @@ class AuthenticateViewModel
                 handleFailure(Failure.ServerError)
                 authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
             }
-        }, email)
+        })
     }
 
     enum class AuthenticationState {

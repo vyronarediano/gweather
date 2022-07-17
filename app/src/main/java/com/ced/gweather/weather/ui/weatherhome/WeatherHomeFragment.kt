@@ -16,6 +16,10 @@ import com.ced.gweather.weather.ui.BaseFragmentDI
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.weather_home_tabbed_fragment.*
 
+/**
+ * @author Cedierick Vyron Arediano
+ * @since 1.0.0
+ */
 class WeatherHomeFragment: BaseFragmentDI() {
 
     private lateinit var weatherHomeViewModel: WeatherHomeViewModel

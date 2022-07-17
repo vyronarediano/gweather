@@ -17,7 +17,6 @@ import com.ced.gweather_core.domain.model.WeatherModel
  * @author Cedierick Vyron Arediano
  * @since 1.0.0
  */
-
 class WeatherRecordsAdapter(private val weatherRecordsViewModel: WeatherRecordsViewModel) :
     RecyclerView.Adapter<WeatherRecordsAdapter.WeatherRecordViewHolder>() {
 

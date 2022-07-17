@@ -1,8 +1,5 @@
 package com.ced.gweather.weather.features.weatherhome
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
 import androidx.lifecycle.MutableLiveData
 import com.ced.authentication.domain.repository.SessionRepository
 import com.ced.commons.clean.rx.EmptySingleObserver
@@ -11,10 +8,13 @@ import com.ced.gweather_core.domain.interactor.AddWeatherRecordUseCase
 import com.ced.gweather_core.domain.interactor.GetCurrentWeatherUseCase
 import com.ced.gweather_core.domain.model.WeatherModel
 import com.ced.gweather_core.internal.viewmodel.BaseViewModel
-import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * @author Cedierick Vyron Arediano
+ * @since 1.0.0
+ */
 class CurrentWeatherViewModel
 @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
@@ -26,6 +26,11 @@ class CurrentWeatherViewModel
 
     var currentLocCityCountry: MutableLiveData<String> = MutableLiveData()
 
+    var showLoadingState = MutableLiveData(false)
+    var showRefreshLayout = MutableLiveData(false)
+    var showContentLayout = MutableLiveData(false)
+    var showEmptyState = MutableLiveData(false)
+
     init {
         addUseCases {
             add(getCurrentWeatherUseCase)
@@ -33,53 +38,62 @@ class CurrentWeatherViewModel
     }
 
     fun getCurrentWeather() {
-        getCurrentWeatherUseCase.execute(object : EmptySingleObserver<WeatherModel>() {
-            override fun onSuccess(result: WeatherModel) {
-                weather.value = result
+        showContentLayout.value = false
+        showEmptyState.value = false
+        showLoadingState.value = true
 
-                // Add to Cloud Firestore every fetch from OpenWeatherMap (only when user opens the app)
-                if (sessionRepository.isAllowedToSave == true) {
-                    result.run {
-                        dateCreated = Calendar.getInstance().time
-                        userId = sessionRepository.loggedInUserId
+        getCurrentWeatherUseCase.execute(
+            params = currentLocCityCountry.value,
+            object : EmptySingleObserver<WeatherModel>() {
+                override fun onSuccess(result: WeatherModel) {
+                    showRefreshLayout.value = false
+                    showLoadingState.value = false
+                    showContentLayout.value = true
 
-                        addWeatherRecordUseCase.execute(object :
-                            EmptySingleObserver<WeatherModel>() {
-                            override fun onSuccess(result: WeatherModel) {
-                                Logger.i(TAG, "Added new weather record.")
-                            }
-                        }, params = this)
+                    weather.value = result
+
+                    addWeatherRecord(result)
+                }
+
+                override fun onError(throwable: Throwable) {
+                    Logger.d(TAG, "Get current weather failed: ${throwable.message}", throwable)
+
+                    showContentLayout.value = false
+                    showRefreshLayout.value = false
+                    showLoadingState.value = false
+                    showEmptyState.value = true
+
+                    handleFailure(FailedToLoadCurrentWeather(throwable))
+                }
+
+                /**
+                 * Add to Cloud Firestore every fetch from OpenWeatherMap (only when user opens the app)
+                 */
+                private fun addWeatherRecord(result: WeatherModel) {
+                    if (sessionRepository.isAllowedToSave == true) {
+                        result.run {
+                            dateCreated = Calendar.getInstance().time
+                            userId = sessionRepository.loggedInUserId
+
+                            addWeatherRecordUseCase.execute(params = this, object :
+                                EmptySingleObserver<WeatherModel>() {
+                                override fun onSuccess(result: WeatherModel) {
+                                    Logger.i(TAG, "Added new weather record.")
+                                }
+                            })
+                        }
                     }
                 }
-            }
 
-            override fun onError(throwable: Throwable) {
-                Logger.d(TAG, "Get current weather failed: ${throwable.message}", throwable)
-
-                handleFailure(FailedToLoadCurrentWeather(throwable))
-            }
-        }, params = currentLocCityCountry.value)
+            })
     }
 
+    /**
+     * For checking if user is allowed to add weather record to
+     * Cloud Firestore every fetch from OpenWeatherMap (only when user opens the app)
+     */
     fun setIsAllowedToSave(isAllowed: Boolean) {
         sessionRepository.isAllowedToSave = isAllowed
-    }
-
-
-    fun getAddressFromLocation(lat: Double, lng: Double, context: Context): List<Address> {
-        var addressList: List<Address> = ArrayList()
-        try {
-            val geocoder = Geocoder(context)
-            addressList = geocoder.getFromLocation(lat, lng, 3)
-
-            currentLocCityCountry.value =
-                "${addressList.first().locality}, ${addressList.first().countryName}"
-        } catch (e: IOException) {
-
-            Logger.e(TAG, e.message ?: "Unable to determine address from location", e)
-        }
-
-        return addressList
     }
 
     companion object {

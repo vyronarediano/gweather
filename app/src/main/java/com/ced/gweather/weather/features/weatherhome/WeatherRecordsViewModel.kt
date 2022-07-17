@@ -37,7 +37,7 @@ class WeatherRecordsViewModel
             }
 
             override fun onError(e: Throwable) {
-                Logger.d(TAG, "Weather records loading failed: ${e.message}", e)
+                Logger.e(TAG, "Weather records loading failed: ${e.message}", e)
 
                 showLoadingState.value = false
 
