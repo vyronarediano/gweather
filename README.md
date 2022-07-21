@@ -27,7 +27,7 @@ A beautiful and minimal weather app illustrating Android development best practi
 
 **Dependency Injection:** Dagger
 
-**API:** Retrofit
+**REST API:** Retrofit
 
 **Database:** Google Firebase Firestore
 
