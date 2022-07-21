@@ -3,6 +3,8 @@
 
 A beautiful and minimal weather app illustrating Android development best practices that displays the current weather forecast of the city to the user using the current location.
 
+![gweather-gif](https://user-images.githubusercontent.com/17285933/180107895-ef86a164-b0bc-4788-848f-101a4ebb0e52.gif)
+
 
 
 
